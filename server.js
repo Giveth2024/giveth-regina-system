@@ -56,13 +56,21 @@ app.use((req, res) => {
 
 // Global Error Handler
 app.use((err, req, res, next) => {
-    console.error(err);
-
+    
     // Handle a syntax error for badly malformed JSON
     if (err.type === "entity.parse.failed")
     {
         return errorResponse(res, "Invald JSON format", 400);
     }
+
+    // JWT ERROR HANDLING
+    // Invalid JSON web token
+    if (err.name === "TokenExpiredError") return errorResponse(res, "JWT Token Expired", 401);
+
+    // Malformed token
+    if (err.name === "JsonWebTokenError") return errorResponse(res, "JWT Token Malformed", 401);
+
+    console.error(err);
 
     res.status(500).json({
         success : false,

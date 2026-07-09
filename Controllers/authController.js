@@ -31,7 +31,7 @@ exports.register = asyncHandler (async (req, res) => {
 
 });
 
-exports.login = asyncHandler( async (req, res) => {
+exports.login = asyncHandler (async (req, res) => {
   const { identifier, password } = req.body || {} // Identifier can be email or username
   
   // Validate fields
@@ -54,8 +54,6 @@ exports.login = asyncHandler( async (req, res) => {
 
   const payload = {
     id : user.id,
-    username : user.username,
-    email : user.email
   }
 
   // We sign the credentials along with jwt
@@ -80,3 +78,14 @@ exports.login = asyncHandler( async (req, res) => {
   });
 
 });
+
+exports.logout = asyncHandler (async (req, res) => {
+  res.cookie('token', '', {
+    httpOnly : true,
+    secure : process.env.NODE_ENV === "production",
+    sameSite : 'strict',
+    expires : new Date(0)
+  });
+
+  return successResponses(res, 200, `${req.user.username} logged out successfully`);
+})
