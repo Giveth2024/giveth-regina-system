@@ -18,9 +18,9 @@ Functional Requirement
 
 
 Non functional Requirement
-It should be secure by hashing users passwords.
-It should be reliable
-It should be fast 
+1. It should be secure by hashing users passwords.
+2. It should be reliable
+3. It should be fast 
 
 Dependencies installed
 bcryptjs
@@ -33,20 +33,33 @@ morgan
 mysql2
 uuid
 nodemon
+jsonwebtoken
+cookie-parser
+
+In-built Dependencies
+crypto
 
 Environment variables
 PORT=5000
 
+Database Credentials
 DB_HOST=
 DB_USER=
 DB_PASSWORD=
 DB_NAME=
 
+JSON WEB TOKEN Credentials
+JWT_SECRET=your_super_secure_random_secret_string_here
+JWT_EXPIRES_IN=1d
+
 BASE URL
 http://localhost/api/giveth
 
+Scripts. 
+i) secrets.js - A 64-character cryptographically secure secret key was generated using Node.js's built-in crypto.randomBytes() function for signing JWTs.
+
 Endpoints 
-1. Authentication
+1. Registration
 POST /register
 
 Description
@@ -103,3 +116,95 @@ Response Body
     "message": "Username or Email is already Registered!"
 }
 
+2. Authentication
+
+Login
+
+POST /login
+
+Description
+Authenticates an existing user using either their username or email address together with their password. The system validates the request, verifies the user's credentials, generates a JSON Web Token (JWT), stores it in a secure HTTP-only cookie, and returns the authenticated user's information.
+
+Processing Flow
+
+Receive the login request.
+- Validate that the required fields (identifier and password) are provided and that no unexpected fields are included.
+- Search for a user using the supplied username or email address.
+- If no matching user is found, return an "Invalid credentials" response.
+- Compare the supplied password with the stored bcrypt password hash.
+- If the password is incorrect, return an "Invalid credentials" response.
+- Generate a JWT containing the user's ID, username, and email.
+- Sign the JWT using the application's secret key.
+- Store the JWT in a secure HTTP-only cookie.
+- Return a successful authentication response.
+
+Request Body
+
+json
+{
+    "identifier": "johndoe",
+    "password": "Password123"
+}
+
+
+> Note:The identifier field accepts either the user's usernameor email address.
+
+Success Response
+
+Status Code:200 OK
+
+Response Body
+
+json
+{
+    "success": true,
+    "message": "Login successful!!",
+    "data": {
+        "full_name": "John Doe"
+    }
+}
+
+
+Authentication Cookie
+Upon successful authentication, the server creates an HTTP-only cookie containing the signed JWT.
+
+Cookie Properties:
+
+Cookie Name: token
+HTTP Only: true
+Secure: true (Production only)
+SameSite: Strict
+Expiration: 24 Hours
+
+Error Responses
+Status Code:400 Bad Request
+
+Response Body
+
+json
+{
+    "success": false,
+    "message": "Missing required field(s): identifier"
+}
+
+
+or
+
+json
+{
+    "success": false,
+    "message": "Unexpected field(s): extraField"
+}
+
+
+---
+
+Status Code:401 Unauthorized
+
+Response Body
+
+json
+{
+    "success": false,
+    "message": "Invalid credentials"
+}
