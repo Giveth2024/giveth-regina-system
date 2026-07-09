@@ -7,6 +7,9 @@ const compression = require('compression');
 
 const db = require('./config/db');
 
+// Routes
+const authRoutes = require('./Routes/authRoutes');
+
 const app = express();
 const PORT = process.env.PORT;
 
@@ -41,6 +44,9 @@ app.use((err, req, res, next) => {
         message: "Internal Server Error"
     });
 });
+
+//Auth routes
+app.use("/api/giveth", authRoutes);
 
 app.get("/", (req, res) => {
     res.json({message: "Server is running"});

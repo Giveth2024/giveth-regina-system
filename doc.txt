@@ -1,0 +1,43 @@
+Tables
+1. Users
+CREATE TABLE IF NOT EXISTS users (
+    id INT varchar(36) NOT NULL PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL, -- Long length to accommodate bcrypt hashes
+    phone_number VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+Functional Requirement
+1. The system should allow the admin to register accounts.
+2. The system should allow the users to login.
+
+
+Non functional Requirement
+It should be secure by hashing users passwords.
+It should be reliable
+It should be fast 
+
+Dependencies installed
+bcryptjs
+compression
+dotenv
+express
+express-rate-limit
+helmet
+morgan
+mysql2
+uuid
+nodemon
+
+Environment variables
+PORT=5000
+
+DB_HOST=
+DB_USER=
+DB_PASSWORD=
+DB_NAME=
