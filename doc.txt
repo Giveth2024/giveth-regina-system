@@ -41,3 +41,65 @@ DB_HOST=
 DB_USER=
 DB_PASSWORD=
 DB_NAME=
+
+BASE URL
+http://localhost/api/giveth
+
+Endpoints 
+1. Authentication
+POST /register
+
+Description
+Registers a new user account. The system validates the request, checks if the username or email already exists, hashes the password using bcrypt, and stores the user in the database.
+
+Processing Flow
+- Receive the registration request.
+- Validate that all required fields are provided.
+- Check whether the username or email already exists.
+- Generate a bcrypt salt.
+- Hash the user's password.
+- Generate a UUID for the user ID.
+- Insert the new user into the database.
+- Return a successful registration response.
+
+
+Request Body
+{
+    "full_name": "John Doe",
+    "username": "johndoe",
+    "email": "john@example.com",
+    "password": "Password123",
+    "phone_number": "0771234567"
+}
+
+Success Response
+Status Code: 201 Created
+
+Response Body
+{
+    "success": true,
+    "message": "Registration was successful",
+    "data": {
+        "result": {
+            "affectedRows": 1
+        }
+    }
+}
+
+Error Responses
+- Status Code: 400 Bad Request
+
+Response Body
+{
+    "success": false,
+    "message": "Please fill out all required fields!"
+}
+
+- Status Code: 409 Conflict
+
+Response Body
+{
+    "success": false,
+    "message": "Username or Email is already Registered!"
+}
+
