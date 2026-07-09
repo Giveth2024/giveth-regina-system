@@ -11,10 +11,30 @@ CREATE TABLE IF NOT EXISTS users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+CREATE TABLE `stock` (
+  `id` CHAR(36) NOT NULL,
+  `item_name` VARCHAR(100) UNIQUE NOT NULL,
+  `item_type` ENUM('Direct Sale', 'Kitchen') NOT NULL,
+  `category` VARCHAR(50) NOT NULL,
+  `barcode` VARCHAR(50) UNIQUE DEFAULT NULL,
+  `unit_type` VARCHAR(20) NOT NULL, -- Can be glass, can, plastic
+  `full_quantity` DECIMAL NOT NULL,
+  `empty_quantity` DECIMAL DEFAULT NULL,
+  `low_stock_alert_level` DECIMAL DEFAULT NULL,
+  `cost_price` DECIMAL(10, 2) NOT NULL,
+  `selling_price` DECIMAL(10, 2) NOT NULL,
+  `expected_profit` DECIMAL(10, 2) NOT NULL,
+  `deleted_at` TIMESTAMP DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_products_barcode` (`barcode`),
+  KEY `idx_products_deleted_at` (`deleted_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 Functional Requirement
 1. The system should allow the admin to register accounts.
 2. The system should allow the users to login.
+3. The system should allow the admin to add stock.
 
 
 Non functional Requirement

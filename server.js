@@ -10,6 +10,7 @@ const db = require('./config/db');
 
 // Routes
 const authRoutes = require('./Routes/authRoutes');
+const stockRoutes = require('./Routes/stockRoutes');
 const { errorResponse } = require("./Helpers/helpers");
 
 const app = express();
@@ -43,7 +44,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 //Auth routes
-app.use("/api/giveth", authRoutes);
+app.use("/api/giveth/auth", authRoutes);
+app.use("/api/giveth/stock", stockRoutes);
 
 app.get("/", (req, res) => {
     res.json({message: "Server is running"});
@@ -56,6 +58,11 @@ app.use((req, res) => {
 
 // Global Error Handler
 app.use((err, req, res, next) => {
+
+    // Database errors
+    if (err.code === "ER_NO_SUCH_TABLE") return errorResponse(res, err.sqlMessage, 404);
+    if (err.code === "ER_DUP_ENTRY") return errorResponse(res, err.sqlMessage, 409);
+    if (err.code === "ER_BAD_NULL_ERROR") return errorResponse(res, err.sqlMessage, 409);
     
     // Handle a syntax error for badly malformed JSON
     if (err.type === "entity.parse.failed")

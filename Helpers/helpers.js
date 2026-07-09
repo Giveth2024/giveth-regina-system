@@ -26,7 +26,12 @@ const validateFields = (body, requiredFields) => {
     }
 
     // We deal with missing fields.
-    const missingFields = requiredFields.filter(field => !body[field]);
+    const missingFields = requiredFields.filter(field => {
+        if (body[field] === 0) return false // Accept 0
+        if (body[field] === null) return false // Accept null
+        
+        return !body[field]
+    });
 
     if (missingFields.length > 0) {
         return (
@@ -54,4 +59,38 @@ const validateFields = (body, requiredFields) => {
     };
 }
 
-module.exports = { successResponses, errorResponse, validateFields };
+function checksIfNumber(input)
+{
+    // Check is it a  number
+    if (typeof input !== "number") {
+        return {
+            status: false,
+            message: "The value is not a number"
+        }
+    }
+
+    if (!Number.isFinite(input))
+    {
+        console.log(input)
+        return {
+            status: false,
+            message : "Number of Infinity and NaN are not allowed"
+        }
+    }
+
+    // We check if its an integer
+    if (Number.isInteger(input)){
+        return {
+            status: true,
+            message: "The value is an integer.",
+        }
+    }
+
+    return {
+        status: true,
+        message: "The value is a decimal."
+    }
+    
+}
+
+module.exports = { successResponses, errorResponse, validateFields, checksIfNumber };
