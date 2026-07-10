@@ -348,3 +348,85 @@ json
     "message": "Stock with id:8a0944be-aca4-4a0d-9957-8ebe3427a2a6 cannot be found or was already deleted"
 }
 
+
+3. Updating Stock Item Details
+--------------------------------------------------------------------------------
+HTTP Method / Endpoint:
+PUT /api/giveth/stock/:id
+
+--> Description
+Updates the attributes of an existing active stock item. The endpoint explicitly
+validates the provided request body fields and checks data types. If an attribute 
+is passed as null, the database retains its pre-existing value using the 
+COALESCE SQL pattern. The expected profit is automatically calculated based on 
+the incoming pricing data or falls back to database records if one or both 
+prices are unchanged.
+
+--> Processing Flow
+1. Parse the stock item UUID from the request parameters.
+2. Validate that structural fields inside the request body are structurally intact.
+3. Validate numeric integrity: Loop through the quantities and pricing values 
+   (full_quantity, empty_quantity, low_stock_alert_level, cost_price, selling_price). 
+   If a field is not a number and not null, reject the execution.
+4. Verify database existence: Query the 'stock' table to verify that an active row 
+   exists matching the provided ID (where deleted_at IS NULL).
+5. Compute Pricing metrics:
+   - If cost_price or selling_price are explicitly null, fetch and utilize the 
+     values currently on record in the database.
+   - If pricing conditions are explicitly passed, calculate the updated margin:
+     Expected Profit = Final Selling Price - Final Cost Price
+6. Execute a unified parameterized SQL UPDATE statement utilizing COALESCE on all 
+   mappable columns to selectively replace values.
+7. Return a successful 200 OK structural response.
+
+--> Request Body Sample (JSON)
+{
+    "item_name": "ICE - Springs Packaged Drinking Water 1.5Litres",
+    "item_type": "Direct Sale",
+    "category": null,
+    "barcode": null,
+    "unit_type": "Plastic",
+    "full_quantity": 23,
+    "empty_quantity": 0,
+    "low_stock_alert_level": 10,
+    "cost_price": 833.33,
+    "selling_price": 1000
+}
+
+Notes:
+- Fields explicitly assigned a "null" value will be skipped by the database, 
+  retaining their current saved profile metrics.
+- The system automatically triggers re-calculation constraints for the 
+  expected_profit entry whenever either cost_price or selling_price changes.
+
+--> Success Response
+Status Code: 200 OK
+Response Body:
+{
+    "success": true,
+    "message": "Stock with id:b62885f0-7d4e-4901-a76b-4ee76932468b updated successfully!!!"
+}
+
+--> Error Responses
+Status Code: 400 Bad Request
+Returned when structurally required parameters fail internal verification.
+{
+    "success": false,
+    "message": "Missing required fields..." 
+}
+
+Status Code: 400 Bad Request
+Returned if any inventory metric array item contains alpha characters.
+{
+    "success": false,
+    "message": "The value is not a number. Make sure the quantity(both full and empty), low stock alert level, cost price and selling price are numbers"
+}
+
+Status Code: 404 Not Found
+Returned when the UUID parameter does not map to an active record.
+{
+    "success": false,
+    "message": "Stock with id:b62885f0-7d4e-4901-a76b-4ee76932468b can't be found"
+}
+
+================================================================================

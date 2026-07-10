@@ -64,3 +64,71 @@ exports.deleteStock = asyncHandler(async (req, res) => {
 
    return successResponses(res, 200, `Stock with id:${id} deleted successfully`);
 });
+
+// Updating stock
+exports.updateStock = asyncHandler(async (req, res) => {
+   const { id } = req.params;
+   const {
+    item_name,
+    item_type,
+    category,
+    barcode,
+    unit_type,
+    full_quantity,
+    empty_quantity,
+    low_stock_alert_level,
+    cost_price,
+    selling_price
+   } = req.body || {}
+
+   // Validate fields
+   const validation = validateFields(req.body, ["item_name", "item_type", "category", "barcode", "unit_type", "full_quantity", "empty_quantity", "low_stock_alert_level", "cost_price", "selling_price"]);
+
+   // Check for any missing fields
+   if (!validation.status) return errorResponse(res, validation.message, 400);
+
+   // validate if we have a number
+   const tempArray = [full_quantity, empty_quantity, low_stock_alert_level, cost_price, selling_price];
+
+   for (const item of tempArray)
+   {
+    const checkIfNumber = checksIfNumber(item);
+
+    if(!checkIfNumber.status) {
+        if(item === null) continue; // Skip if number
+
+        return errorResponse(res, `${checkIfNumber.message}. Make sure the quantity(both full and empty), low stock alert level, cost price and selling price are numbers`, 400);
+    }
+   }
+
+   // Check if it exists
+   const [stock] = await pool.query('SELECT id FROM stock WHERE id=? and deleted_at is NULL', [id]);
+   if (stock.length === 0) return errorResponse(res, `Stock with id:${id} can't be found`, 404);
+
+   // Check if selleing price and cost pirce are we make sure that are null, if they are we use the one in the DB
+   const finalCost = cost_price !== null ? cost_price : stock[0].cost_price;
+   const finalSelling = selling_price !== null ? selling_price : stock[0].selling_price;
+   // But if the selling price and cost price are both null them we make it null or calculate the expected profit.
+   const expected_profit = selling_price === null || cost_price === null ? null : finalSelling - finalCost;
+
+   const queryFields = [item_name, item_type, category, barcode, unit_type, full_quantity, empty_quantity, low_stock_alert_level, cost_price, selling_price, expected_profit, id]
+
+   // COALESCE(?, column_name) preserves the old value if the parameter is NULL
+   const updateQuery = await pool.query(`UPDATE stock 
+        SET 
+            item_name = COALESCE(?, item_name),
+            item_type = COALESCE(?, item_type),
+            category = COALESCE(?, category),
+            barcode = COALESCE(?, barcode),
+            unit_type = COALESCE(?, unit_type),
+            full_quantity = COALESCE(?, full_quantity),
+            empty_quantity = COALESCE(?, empty_quantity),
+            low_stock_alert_level = COALESCE(?, low_stock_alert_level),
+            cost_price = COALESCE(?, cost_price),
+            selling_price = COALESCE(?, selling_price),
+            expected_profit = COALESCE(?, expected_profit)
+        WHERE id = ? AND deleted_at IS NULL`, queryFields);
+
+    return successResponses(res, 200, `Stock with id:${id} updated successfully.`);
+
+});

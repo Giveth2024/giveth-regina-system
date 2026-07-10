@@ -11,4 +11,7 @@ router.post("/add", protect, stockController.addStock);
 // Deleting Stock
 router.delete("/:id", protect, stockController.deleteStock);
 
+// Update Stock
+router.put("/:id", protect, stockController.updateStock);
+
 module.exports = router;
