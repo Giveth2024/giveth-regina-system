@@ -11,23 +11,23 @@ CREATE TABLE IF NOT EXISTS users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE `stock` (
-  `id` CHAR(36) NOT NULL,
-  `item_name` VARCHAR(100) UNIQUE NOT NULL,
-  `item_type` ENUM('Direct Sale', 'Kitchen') NOT NULL,
-  `category` VARCHAR(50) NOT NULL,
-  `barcode` VARCHAR(50) UNIQUE DEFAULT NULL,
-  `unit_type` VARCHAR(20) NOT NULL, -- Can be glass, can, plastic
-  `full_quantity` DECIMAL NOT NULL,
-  `empty_quantity` DECIMAL DEFAULT NULL,
-  `low_stock_alert_level` DECIMAL DEFAULT NULL,
-  `cost_price` DECIMAL(10, 2) NOT NULL,
-  `selling_price` DECIMAL(10, 2) NOT NULL,
-  `expected_profit` DECIMAL(10, 2) NOT NULL,
-  `deleted_at` TIMESTAMP DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idx_products_barcode` (`barcode`),
-  KEY `idx_products_deleted_at` (`deleted_at`)
+CREATE TABLE stock (
+  id CHAR(36) NOT NULL,
+  item_name VARCHAR(100) UNIQUE NOT NULL,
+  item_type ENUM('Direct Sale', 'Kitchen') NOT NULL,
+  category VARCHAR(50) NOT NULL,
+  barcode VARCHAR(50) UNIQUE DEFAULT NULL,
+  unit_type VARCHAR(20) NOT NULL, -- Can be glass, can, plastic
+  full_quantity DECIMAL NOT NULL,
+  empty_quantity DECIMAL DEFAULT NULL,
+  low_stock_alert_level DECIMAL DEFAULT NULL,
+  cost_price DECIMAL(10, 2) NOT NULL,
+  selling_price DECIMAL(10, 2) NOT NULL,
+  expected_profit DECIMAL(10, 2) NOT NULL,
+  deleted_at TIMESTAMP DEFAULT NULL,
+  PRIMARY KEY (id),
+  KEY idx_products_barcode (barcode),
+  KEY idx_products_deleted_at (deleted_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -228,3 +228,88 @@ json
     "success": false,
     "message": "Invalid credentials"
 }
+
+Stock Management
+1. Adding Stock
+
+POST/api/giveth/stock/add
+
+--> Description
+Adds a new stock item to the inventory. The system validates all required fields, ensures the item type is valid, checks that quantity and pricing fields are numeric, calculates the expected profit, generates a UUID for the stock item, and stores the record in the database.
+
+--> Processing Flow
+- Receive the stock creation request.
+- Validate that all required fields are provided.
+- Validate that the item_type is either Direct Sale - or Kitchen.
+- Validate that quantity and pricing fields contain valid numeric values.
+- Generate a UUID for the stock ID.
+- Calculate the expected profit using:
+  Expected Profit = Selling Price - Cost Price
+- Insert the stock item into the database.
+- Return a successful response.
+
+--> Request Body
+json
+{
+    "item_name": "Sprite Lemon-Lime Flavored Carbonated Soft Drink 330ml",
+    "item_type": "Direct Sale",
+    "category": "Soft Drinks",
+    "barcode": "457687865454",
+    "unit_type": "Plastic",
+    "full_quantity": 13,
+    "empty_quantity": 0,
+    "low_stock_alert_level": 10,
+    "cost_price": 833.33,
+    "selling_price": 1000
+}
+
+
+Notes
+- item_type must be either "Direct Sale" or "Kitchen".
+- barcode may be null if the item does not have a barcode.
+- item_name must be unique.
+- If a barcode is provided, it must be unique.
+- expected_profit is calculated automatically and should not be included in the request.
+
+--> Success Response
+Status Code:- 201 Created
+Response Body
+json
+{
+    "success": true,
+    "message": "Sprite Lemon-Lime Flavored Carbonated Soft Drink 330ml added successfully"
+}
+
+--> Error Responses
+Status Code:- 400 Bad Request
+Returned when one or more required fields are missing.
+json
+{
+    "success": false,
+    "message": "Missing required fields: item_name"
+}
+
+Status Code:- 400 Bad Request
+Returned when one or more quantity or pricing fields are not valid numbers.
+json
+{
+    "success": false,
+    "message": "The value is not a number. Make sure the quantity (both full and empty), low stock alert level, cost price and selling price are numbers"
+}
+
+Status Code:- 409 Conflict
+Returned when an invalid item type is supplied.
+json
+{
+    "success": false,
+    "message": "Error: The item_type must be Direct Sale / Kitchen"
+}
+
+Status Code:- 409 Conflict
+Returned when the item name or barcode already exists in the inventory.
+json
+{
+    "success": false,
+    "message": "Item name or barcode already exists."
+}
+
