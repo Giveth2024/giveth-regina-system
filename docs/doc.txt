@@ -313,3 +313,38 @@ json
     "message": "Item name or barcode already exists."
 }
 
+2. Deleting Stock
+DELETE /api/giveth/stock/:id
+
+--> Description
+Performs a soft delete on an existing stock item in the inventory by its unique identifier (id). Instead of permanently destroying the database record, the system updates the deleted_at timestamp column to preserve data integrity for historical auditing, sales tracking, and reporting.
+
+--> Processing Flow
+* Receive the soft delete request containing the stock item id as a URL parameter.
+* Execute an update query targeting rows where the id matches and the deleted_at field is currently NULL.
+* Update the deleted_at field with the current system timestamp (NOW()).
+* Evaluate the result set payload:
+* If affectedRows equals 0, recognize that the stock item either does not exist or has already undergone a soft delete, and halt the execution process.
+* Return a successful completion response confirming the soft deletion.
+
+--> Request Parameters
+id (string, Required): The 36-character UUID string belonging to the stock item you intend to remove.
+
+--> Success Response
+Status Code:200 OK
+Response Body
+json
+{
+    "success": true,
+    "message": "Stock with id:8a0944be-aca4-4a0d-9957-8ebe3427a2a6 deleted successfully"
+}
+
+--> Error Responses
+Status Code: 404 Not Found
+*Returned when the provided UUID does not exist within the active directory list.*
+json
+{
+    "success": false,
+    "message": "Stock with id:8a0944be-aca4-4a0d-9957-8ebe3427a2a6 cannot be found or was already deleted"
+}
+

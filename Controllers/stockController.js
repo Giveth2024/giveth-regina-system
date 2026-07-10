@@ -3,6 +3,7 @@ const { v4 : uuidv4 } = require("uuid");
 const asyncHandler = require('../Helpers/asyncHandler');
 const { validateFields, errorResponse, successResponses, checksIfNumber } = require('../Helpers/helpers');
 
+// Add stock
 exports.addStock = asyncHandler ( async (req, res) => {
    const { item_name, item_type,  category,  barcode,  unit_type,  full_quantity,  empty_quantity,  low_stock_alert_level,  cost_price,  selling_price } = req.body || {};
 
@@ -49,4 +50,17 @@ exports.addStock = asyncHandler ( async (req, res) => {
     
     return successResponses(res, 201, `${item_name} added successfully`);
 
+});
+
+// Delete Stock
+exports.deleteStock = asyncHandler(async (req, res) => {
+   const { id } = req.params;
+
+   // carry out a soft delete where deleted is null
+   const [results] = await pool.query('UPDATE stock SET deleted_at = NOW() WHERE id = ? AND deleted_at is NULL', [ id ]);
+
+   // check if the item was deleted
+   if (results.affectedRows === 0) return errorResponse(res, `Stock with id:${id} cannot be found or was already deleted`, 404);
+
+   return successResponses(res, 200, `Stock with id:${id} deleted successfully`);
 });
