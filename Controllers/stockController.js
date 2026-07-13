@@ -1,7 +1,8 @@
 const pool = require('../config/db');
-const { v4 : uuidv4 } = require("uuid");
+const { v4 : uuidv4, parse } = require("uuid");
 const asyncHandler = require('../Helpers/asyncHandler');
 const { validateFields, errorResponse, successResponses, checksIfNumber } = require('../Helpers/helpers');
+const { filter } = require('compression');
 
 // Add stock
 exports.addStock = asyncHandler ( async (req, res) => {
@@ -132,3 +133,194 @@ exports.updateStock = asyncHandler(async (req, res) => {
     return successResponses(res, 200, `Stock with id:${id} updated successfully.`);
 
 });
+
+// Get all stock
+exports.getStock = asyncHandler(async (req, res) => {
+    // Grab optional params from url
+    const { category, item_type, search, unit_type, low_stock, out_of_stock } = req.query;
+    let limit = parseInt(req.query.limit, 10);
+    let page = parseInt(req.query.page, 10);
+    const max_selling_price = parseFloat(req.query.max_selling_price, 10);
+    const min_selling_price = parseFloat(req.query.min_selling_price, 10);
+    const max_cost_price = parseFloat(req.query.max_cost_price, 10);
+    const min_cost_price = parseFloat(req.query.min_cost_price, 10);
+
+    // set the query
+    let sqlQuery = "SELECT * FROM stock WHERE deleted_at is NULL";
+
+    // Array for params
+    const queryParams = [];
+
+    // Add category if its in the url
+    if (category) {
+        sqlQuery += " AND category = ?";
+        queryParams.push(category);
+    }
+
+    // item type if it exists in the url
+    if (item_type)
+    {
+        sqlQuery += " AND item_type = ?";
+        queryParams.push(item_type);
+    }
+
+    // unit type if it exists in the url
+    if (unit_type)
+    {
+        sqlQuery += " AND unit_type = ?";
+        queryParams.push(unit_type);
+    }
+
+    // if true we handle low stock levels
+    if (low_stock === "true")
+    {
+        sqlQuery += " AND full_quantity <= low_stock_alert_level";
+
+    }
+
+    // if true we handle no stock
+    if (out_of_stock === "true")
+    {
+        sqlQuery += " AND full_quantity = 0";
+    }
+
+    // Search for id, barcode and item Name
+    if (search) {
+        sqlQuery += " AND (id = ? OR barcode = ? OR item_name LIKE ?)";
+
+        // Create a wildcard to look for what you want anywhere in MYSQL
+        const wildCard = `%${search}`;
+
+        queryParams.push(search, search, wildCard);
+    }
+
+    // Add selling price filter
+    if(!isNaN(max_selling_price))
+    {
+        sqlQuery += " AND selling_price <= ?";
+        queryParams.push(max_selling_price);
+    }
+
+    if(!isNaN(min_selling_price))
+    {
+        sqlQuery += " AND selling_price >= ?";
+        queryParams.push(min_selling_price);
+    }
+
+    // Add cost price filter
+    if(!isNaN(max_cost_price))
+    {
+        sqlQuery += " AND cost_price <= ?";
+        queryParams.push(max_cost_price);
+    }
+
+    if(!isNaN(min_cost_price))
+    {
+        sqlQuery += " AND cost_price >= ?";
+        queryParams.push(min_cost_price);
+    }
+
+    console.log("Executing Query:", sqlQuery);
+    console.log("With Params:", queryParams);
+
+    if(!Number.isInteger(limit) || limit <= 0) limit = 50;
+    if(!Number.isInteger(page) || page <= 0) page = 1;
+
+    // calculate how many times to skip
+    const offset = (page - 1) * limit;
+
+    // Add limits
+    sqlQuery += ' LIMIT ? OFFSET ?'
+    queryParams.push(limit, offset);
+
+    const [items] = await pool.query(sqlQuery, queryParams);
+
+    if (items.length === 0) return errorResponse(res, "Item Can't be Found", 404);
+
+    return successResponses(res, 200, "Items have been Fetched Successfully", {
+        rowsRequested : limit,
+        currentPage : page,
+        filtersApplied : {
+            search : search || null,
+            category : category || 'all',
+            item_type : item_type || 'all',
+            unit_type : unit_type || 'all',
+            low_stock : low_stock === "true",
+            out_of_stock : out_of_stock === "true",
+            price_bounds : {
+                max_selling_price : !isNaN(max_selling_price) ? max_selling_price : null,
+                min_selling_price : !isNaN(min_selling_price) ? min_selling_price : null,
+                max_cost_price : !isNaN(max_cost_price) ? max_cost_price : null,
+                min_cost_price : !isNaN(min_cost_price) ? min_cost_price : null
+            }
+        },
+        count : items.length,
+        data : items
+    })
+}); 
+
+// GET STOCK REQUESTS
+/*
+
+11. Highest Selling price
+SELECT *
+FROM stock
+WHERE deleted_at IS NULL
+ORDER BY selling_price DESC;
+
+12. Lowest Selling Price
+SELECT *
+FROM stock
+WHERE deleted_at IS NULL
+ORDER BY selling_price ASC;
+
+13. Highest expected profit
+SELECT *
+FROM stock
+WHERE deleted_at IS NULL
+ORDER BY expected_profit DESC;
+
+14. Highest Quantity
+SELECT *
+FROM stock
+WHERE deleted_at IS NULL
+ORDER BY full_quantity DESC;
+
+15. Lowest Quantity
+SELECT *
+FROM stock
+WHERE deleted_at IS NULL
+ORDER BY full_quantity ASC;
+
+16. Products with empty bottle
+SELECT *
+FROM stock
+WHERE deleted_at IS NULL
+AND empty_quantity = 0;
+
+17. Products with empty bottle but within the beer category
+
+18 Products with no empty bottles
+SELECT *
+FROM stock
+WHERE deleted_at IS NULL
+AND empty_quantity = 0;
+
+19. Recently Added (added a created_at column)
+
+20 Alaphaetical order
+
+20 Reverse Alaphaetical order
+
+24. Multiple Filters together
+SELECT *
+FROM stock
+WHERE deleted_at IS NULL
+AND item_type = 'Direct Sale'
+AND category = 'Beer'
+AND full_quantity > 20
+AND selling_price < 5000;
+
+25. Items that where deleted
+
+*/
