@@ -138,7 +138,7 @@ exports.updateStock = asyncHandler(async (req, res) => {
 // Get all stock
 exports.getStock = asyncHandler(async (req, res) => {
     // Grab optional params from url
-    const { category, item_type, search, unit_type, low_stock, out_of_stock, no_empty_bottles, sort_by, order } = req.query;
+    const { category, item_type, search, unit_type, low_stock, out_of_stock, no_empty_bottles, has_empty_bottles, sort_by, order } = req.query;
     let limit = parseInt(req.query.limit, 10);
     let page = parseInt(req.query.page, 10);
     const max_selling_price = parseFloat(req.query.max_selling_price, 10);
@@ -189,6 +189,12 @@ exports.getStock = asyncHandler(async (req, res) => {
     if (no_empty_bottles === "true")
     {
         sqlQuery += " AND empty_quantity = 0";
+    }
+
+    // if true we handle, product has empty bottles
+    if (has_empty_bottles === "true")
+    {
+        sqlQuery += " AND empty_quantity > 0";
     }
 
     // Search for id, barcode and item Name
@@ -266,6 +272,7 @@ exports.getStock = asyncHandler(async (req, res) => {
             low_stock : low_stock === "true",
             out_of_stock : out_of_stock === "true",
             no_empty_bottles : no_empty_bottles === "true",
+            has_empty_bottles : has_empty_bottles === "true",
             sort_by : activeSortColumn,
             order : activeOrder,
             price_bounds : {
@@ -282,25 +289,6 @@ exports.getStock = asyncHandler(async (req, res) => {
 
 // GET STOCK REQUESTS
 /*
-16. Products with empty bottle
-SELECT *
-FROM stock
-WHERE deleted_at IS NULL
-AND empty_quantity = 0;
-
-17. Products with empty bottle but within the beer category
-
-18 Products with no empty bottles
-SELECT *
-FROM stock
-WHERE deleted_at IS NULL
-AND empty_quantity = 0;
-
-19. Recently Added (added a created_at column)
-
-20 Alaphaetical order
-
-20 Reverse Alaphaetical order
 
 24. Multiple Filters together
 SELECT *
