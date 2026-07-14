@@ -1,8 +1,7 @@
 const pool = require('../config/db');
-const { v4 : uuidv4, parse } = require("uuid");
+const { v4 : uuidv4 } = require("uuid");
 const asyncHandler = require('../Helpers/asyncHandler');
 const { validateFields, errorResponse, successResponses, checksIfNumber } = require('../Helpers/helpers');
-const { filter } = require('compression');
 
 // Add stock
 exports.addStock = asyncHandler ( async (req, res) => {
@@ -130,7 +129,9 @@ exports.updateStock = asyncHandler(async (req, res) => {
             expected_profit = COALESCE(?, expected_profit)
         WHERE id = ? AND deleted_at IS NULL`, queryFields);
 
-    return successResponses(res, 200, `Stock with id:${id} updated successfully.`);
+    return successResponses(res, 200, `Stock with id:${id} updated successfully.`, {
+        data : updateQuery
+    });
 
 });
 
@@ -256,7 +257,7 @@ exports.getStock = asyncHandler(async (req, res) => {
         },
         count : items.length,
         data : items
-    })
+    });
 }); 
 
 // GET STOCK REQUESTS
