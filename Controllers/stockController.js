@@ -138,7 +138,7 @@ exports.updateStock = asyncHandler(async (req, res) => {
 // Get all stock
 exports.getStock = asyncHandler(async (req, res) => {
     // Grab optional params from url
-    const { category, item_type, search, unit_type, low_stock, out_of_stock, sort_by, order } = req.query;
+    const { category, item_type, search, unit_type, low_stock, out_of_stock, no_empty_bottles, sort_by, order } = req.query;
     let limit = parseInt(req.query.limit, 10);
     let page = parseInt(req.query.page, 10);
     const max_selling_price = parseFloat(req.query.max_selling_price, 10);
@@ -183,6 +183,12 @@ exports.getStock = asyncHandler(async (req, res) => {
     if (out_of_stock === "true")
     {
         sqlQuery += " AND full_quantity = 0";
+    }
+
+    // if true we handle no empty bottles
+    if (no_empty_bottles === "true")
+    {
+        sqlQuery += " AND empty_quantity = 0";
     }
 
     // Search for id, barcode and item Name
@@ -259,6 +265,7 @@ exports.getStock = asyncHandler(async (req, res) => {
             unit_type : unit_type || 'all',
             low_stock : low_stock === "true",
             out_of_stock : out_of_stock === "true",
+            no_empty_bottles : no_empty_bottles === "true",
             sort_by : activeSortColumn,
             order : activeOrder,
             price_bounds : {
