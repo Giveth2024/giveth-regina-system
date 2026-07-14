@@ -296,7 +296,7 @@ exports.getStock = asyncHandler(async (req, res) => {
                 max_quantity : !isNaN(max_quantity) ? max_quantity : null,
                 min_quantity : !isNaN(min_quantity) ? min_quantity : null,
             },
-            price_bounds : {
+            price_range : {
                 max_selling_price : !isNaN(max_selling_price) ? max_selling_price : null,
                 min_selling_price : !isNaN(min_selling_price) ? min_selling_price : null,
                 max_cost_price : !isNaN(max_cost_price) ? max_cost_price : null,
