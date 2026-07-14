@@ -35,6 +35,7 @@ CREATE TABLE `sales` (
   `id` VARCHAR(36) NOT NULL,
   `user_id` VARCHAR(36) NOT NULL,
   `debtor_id` VARCHAR(36) DEFAULT NULL,
+  `invoice_number` VARCHAR(25) UNIQUE NOT NULL,
   `total_amount` DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
   `amount_paid` DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
   `change_amount` DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
