@@ -71,13 +71,17 @@ CREATE TABLE `sale_items` (
     ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-Functional Requirement
+Functional Requirements
 1. The system should allow the admin to register accounts.
 2. The system should allow the users to login.
 3. The system should allow the admin to add stock.
+4. The system should allow the admin to update stock.
+5. The system should allow the admin to delete stock.
+6. The system should allow the admin to fetch stock.
+7. The system should allow the admin to add sales.
 
 
-Non functional Requirement
+Non functional Requirements
 1. It should be secure by hashing users passwords.
 2. It should be reliable
 3. It should be fast 
