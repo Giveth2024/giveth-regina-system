@@ -138,7 +138,7 @@ exports.updateStock = asyncHandler(async (req, res) => {
 // Get all stock
 exports.getStock = asyncHandler(async (req, res) => {
     // Grab optional params from url
-    const { category, item_type, search, unit_type, low_stock, out_of_stock, no_empty_bottles, has_empty_bottles, sort_by, order } = req.query;
+    const { category, item_type, search, unit_type, low_stock, out_of_stock, no_empty_bottles, has_empty_bottles, deleted, sort_by, order } = req.query;
     let limit = parseInt(req.query.limit, 10);
     let page = parseInt(req.query.page, 10);
     const max_selling_price = parseFloat(req.query.max_selling_price, 10);
@@ -151,7 +151,16 @@ exports.getStock = asyncHandler(async (req, res) => {
     const min_quantity = parseInt(req.query.min_quantity, 10);
 
     // set the query
-    let sqlQuery = "SELECT * FROM stock WHERE deleted_at is NULL";
+    let sqlQuery = "SELECT * FROM stock WHERE";
+    
+    // If true handle deleted items
+    if(deleted === "true")
+    {
+        sqlQuery += " deleted_at IS NOT NULL";
+    } else
+    {
+        sqlQuery += " deleted_at IS NULL";
+    }
 
     // Array for params
     const queryParams = [];
@@ -290,6 +299,7 @@ exports.getStock = asyncHandler(async (req, res) => {
             out_of_stock : out_of_stock === "true",
             no_empty_bottles : no_empty_bottles === "true",
             has_empty_bottles : has_empty_bottles === "true",
+            viewingDeleted : deleted === "true",
             sort_by : activeSortColumn,
             order : activeOrder,
             quantity_range : {
@@ -307,19 +317,3 @@ exports.getStock = asyncHandler(async (req, res) => {
         data : items
     });
 }); 
-
-// GET STOCK REQUESTS
-/*
-
-24. Multiple Filters together
-SELECT *
-FROM stock
-WHERE deleted_at IS NULL
-AND item_type = 'Direct Sale'
-AND category = 'Beer'
-AND full_quantity > 20
-AND selling_price < 5000;
-
-25. Items that where deleted
-
-*/
