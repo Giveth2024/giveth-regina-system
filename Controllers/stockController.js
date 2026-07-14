@@ -231,7 +231,7 @@ exports.getStock = asyncHandler(async (req, res) => {
     const offset = (page - 1) * limit;
     
     // Get the list of columns that can be sorted
-    const allowedSortColumns = ["item_name", "selling_price", "cost_price", "full_quantity", "empty_quantity", "created_at"];
+    const allowedSortColumns = ["item_name", "selling_price", "cost_price", "full_quantity", "empty_quantity", "expected_profit", "created_at"];
     const activeSortColumn = allowedSortColumns.includes(sort_by) ? sort_by : 'item_name';
 
     // Determine the order
@@ -275,37 +275,6 @@ exports.getStock = asyncHandler(async (req, res) => {
 
 // GET STOCK REQUESTS
 /*
-
-11. Highest Selling price
-SELECT *
-FROM stock
-WHERE deleted_at IS NULL
-ORDER BY selling_price DESC;
-
-12. Lowest Selling Price
-SELECT *
-FROM stock
-WHERE deleted_at IS NULL
-ORDER BY selling_price ASC;
-
-13. Highest expected profit
-SELECT *
-FROM stock
-WHERE deleted_at IS NULL
-ORDER BY expected_profit DESC;
-
-14. Highest Quantity
-SELECT *
-FROM stock
-WHERE deleted_at IS NULL
-ORDER BY full_quantity DESC;
-
-15. Lowest Quantity
-SELECT *
-FROM stock
-WHERE deleted_at IS NULL
-ORDER BY full_quantity ASC;
-
 16. Products with empty bottle
 SELECT *
 FROM stock
