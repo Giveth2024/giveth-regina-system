@@ -146,6 +146,10 @@ exports.getStock = asyncHandler(async (req, res) => {
     const max_cost_price = parseFloat(req.query.max_cost_price, 10);
     const min_cost_price = parseFloat(req.query.min_cost_price, 10);
 
+    // Quantity Ranges
+    const max_quantity = parseInt(req.query.max_quantity, 10);
+    const min_quantity = parseInt(req.query.min_quantity, 10);
+
     // set the query
     let sqlQuery = "SELECT * FROM stock WHERE deleted_at is NULL";
 
@@ -233,6 +237,19 @@ exports.getStock = asyncHandler(async (req, res) => {
         queryParams.push(min_cost_price);
     }
 
+    // Add quantity filters
+    if(!isNaN(max_quantity))
+    {
+        sqlQuery += " AND full_quantity <= ?";
+        queryParams.push(max_quantity);
+    }
+
+    if(!isNaN(min_quantity))
+    {
+        sqlQuery += " AND full_quantity >= ?";
+        queryParams.push(min_quantity);
+    }
+
     console.log("Executing Query:", sqlQuery);
     console.log("With Params:", queryParams);
 
@@ -275,6 +292,10 @@ exports.getStock = asyncHandler(async (req, res) => {
             has_empty_bottles : has_empty_bottles === "true",
             sort_by : activeSortColumn,
             order : activeOrder,
+            quantity_range : {
+                max_quantity : !isNaN(max_quantity) ? max_quantity : null,
+                min_quantity : !isNaN(min_quantity) ? min_quantity : null,
+            },
             price_bounds : {
                 max_selling_price : !isNaN(max_selling_price) ? max_selling_price : null,
                 min_selling_price : !isNaN(min_selling_price) ? min_selling_price : null,
