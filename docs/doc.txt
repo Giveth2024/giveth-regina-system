@@ -431,3 +431,106 @@ Returned when the UUID parameter does not map to an active record.
 }
 
 ================================================================================
+
+4. Fetching Stock Items
+--------------------------------------------------------------------------------
+HTTP Method / Endpoint:
+GET /api/giveth/stock
+
+--> Description
+Retrieves a paginated list of stock items from the inventory. The endpoint supports optional filtering by category, item type, unit type, stock condition, search text, price ranges, quantity ranges, deleted records visibility, and sorting. It returns the matching stock records together with pagination metadata and the filters that were applied.
+
+--> Processing Flow
+1. Read the optional query parameters from the request URL.
+2. Build a dynamic SQL query that includes only active stock records by default, unless deleted=true is supplied.
+3. Append additional filters for category, item_type, unit_type, low stock, out of stock, empty bottle conditions, search terms, price ranges, and quantity ranges.
+4. Apply default pagination values when limit or page are missing or invalid.
+5. Determine the allowed sort column and order direction; if none is provided, the system defaults to sorting by item_name in ascending order.
+6. Add LIMIT and OFFSET clauses to the query.
+7. Execute the query and return the matching records with metadata.
+
+--> Query Parameters
+- category (string, optional): Filters stock by category.
+- item_type (string, optional): Filters stock by item type such as Direct Sale or Kitchen.
+- unit_type (string, optional): Filters stock by unit type.
+- search (string, optional): Searches by stock id, barcode, or item_name.
+- low_stock (boolean, optional): Set to true to return items where full_quantity <= low_stock_alert_level.
+- out_of_stock (boolean, optional): Set to true to return items where full_quantity = 0.
+- no_empty_bottles (boolean, optional): Set to true to return items where empty_quantity = 0.
+- has_empty_bottles (boolean, optional): Set to true to return items where empty_quantity > 0.
+- deleted (boolean, optional): Set to true to include soft-deleted records.
+- sort_by (string, optional): One of item_name, selling_price, cost_price, full_quantity, empty_quantity, expected_profit, created_at.
+- order (string, optional): asc or desc.
+- limit (number, optional): Number of records per page. Default is 50.
+- page (number, optional): Page number. Default is 1.
+- max_selling_price (number, optional): Upper selling price filter.
+- min_selling_price (number, optional): Lower selling price filter.
+- max_cost_price (number, optional): Upper cost price filter.
+- min_cost_price (number, optional): Lower cost price filter.
+- max_quantity (number, optional): Upper full quantity filter.
+- min_quantity (number, optional): Lower full quantity filter.
+
+--> Example Request
+GET /api/giveth/stock?category=Soft%20Drinks
+--> Success Response
+Status Code: 200 OK
+Response Body:
+{
+    "success": true,
+    "message": "Items have been Fetched Successfully",
+    "data": {
+        "rowsRequested": 50,
+        "currentPage": 1,
+        "filtersApplied": {
+            "search": "sprite",
+            "category": "Soft Drinks",
+            "item_type": "Direct Sale",
+            "unit_type": "all",
+            "low_stock": false,
+            "out_of_stock": false,
+            "no_empty_bottles": false,
+            "has_empty_bottles": false,
+            "viewingDeleted": false,
+            "sort_by": "item_name",
+            "order": "ASC",
+            "quantity_range": {
+                "max_quantity": null,
+                "min_quantity": null
+            },
+            "price_range": {
+                "max_selling_price": null,
+                "min_selling_price": null,
+                "max_cost_price": null,
+                "min_cost_price": null
+            }
+        },
+        "count": 50,
+        "data": [           
+            {
+                "id": "eb0721fb-0da7-4236-9d40-04bc3322bd32",
+                "item_name": "Soft Drinks Item 111",
+                "item_type": "Direct Sale",
+                "category": "Soft Drinks",
+                "barcode": "BC00000111",
+                "unit_type": "Pack",
+                "full_quantity": "274",
+                "empty_quantity": "0",
+                "low_stock_alert_level": "29",
+                "cost_price": "4284.71",
+                "selling_price": "4688.46",
+                "expected_profit": "403.75",
+                "deleted_at": null,
+                "created_at": "2026-07-10T14:51:51.000Z"
+            },
+        ]
+    }
+}
+
+--> Error Responses
+Status Code: 404 Not Found
+Returned when no stock records match the provided filters.
+{
+    "success": false,
+    "message": "Item Can't be Found"
+}
+
