@@ -581,3 +581,89 @@ Returned when no stock records match the provided filters.
     "message": "Item Can't be Found"
 }
 
+================================================================================
+
+5. Adding Sales
+--------------------------------------------------------------------------------
+HTTP Method / Endpoint:
+POST /api/giveth/sales/add
+
+--> Description
+Creates a new sale transaction and records each sold item in the sale_items table. The endpoint requires authentication and executes the entire sales workflow inside a database transaction so that the sales record, sale item records, and stock updates are all committed together. If any step fails, the transaction is rolled back to keep the inventory and sales data consistent.
+
+--> Processing Flow
+1. Receive the authenticated sales request.
+2. Extract the sale-level fields from the request body: user_id, debtor_id, creditor_id, total_amount, amount_paid, change_amount, and items.
+3. Generate a UUID for the sale and an invoice number using the current date-based invoice sequence.
+4. Insert the sale into the sales table.
+5. Validate that the items array is not empty.
+6. For each item in the items array:
+   - verify that the referenced stock record exists;
+   - create a sale_items record with a new UUID and the sale details;
+   - update the matching stock record to reduce available quantity.
+7. Commit the transaction and return a success response.
+8. If any validation, stock check, or stock update fails, roll back the transaction and return an error.
+
+--> Request Body
+json
+{
+    "user_id": "f9c0d6c9-0db4-4d5c-8c7c-91f16a59d3ef",
+    "debtor_id": null,
+    "creditor_id": null,
+    "total_amount": 5000,
+    "amount_paid": 5000,
+    "change_amount": 0,
+    "items": [
+        {
+            "stock_id": "6b4f0e98-82f3-41d1-aee2-3a4b6c7d8e9f",
+            "quantity": 2,
+            "selling_price": 2500,
+            "glass_fine_per_unit": 0,
+            "glass_status": null,
+            "subtotal": 5000,
+            "profit": 1000
+        }
+    ]
+}
+
+Notes:
+- This endpoint requires authentication.
+- The items array must contain at least one item.
+- Each item must reference an existing stock record.
+- The system prevents a sale from exceeding the available stock quantity.
+- If any stock update fails, the entire sale is rolled back.
+
+--> Success Response
+Status Code: 201 Created
+Response Body
+json
+{
+    "success": true,
+    "message": "Sales added successfully"
+}
+
+--> Error Responses
+Status Code: 400 Bad Request
+Returned when the items array is empty.
+json
+{
+    "success": false,
+    "message": "Items can't be empty!!!"
+}
+
+Status Code: 404 Not Found
+Returned when a referenced stock item does not exist.
+json
+{
+    "success": false,
+    "message": "Item with id:<stock_id> Not Found!!!"
+}
+
+Status Code: 400 Bad Request
+Returned when the requested quantity exceeds the available stock.
+json
+{
+    "success": false,
+    "message": "Avaliable Stock for <item_name>: <available_quantity>\n Requested: <quantity>"
+}
+
