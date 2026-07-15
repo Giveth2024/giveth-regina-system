@@ -34,12 +34,13 @@ CREATE TABLE stock (
 CREATE TABLE `sales` (
   `id` VARCHAR(36) NOT NULL,
   `user_id` VARCHAR(36) NOT NULL,
-  `debtor_id` VARCHAR(36) DEFAULT NULL,
+  `debtor_id` VARCHAR(36) DEFAULT NULL,,
+  `creditor_id` VARCHAR(36) DEFAULT NULL,,
   `invoice_number` VARCHAR(25) UNIQUE NOT NULL,
   `total_amount` DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
   `amount_paid` DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
   `change_amount` DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
-  `payment_type` ENUM('Cash', 'Mobile Money', 'Card', 'Debt') NOT NULL DEFAULT 'Cash',
+  `payment_type` ENUM('Cash', 'Mobile Money', 'Card', 'Debt', 'Credit') NOT NULL DEFAULT 'Cash',
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_sales_user` 
@@ -56,9 +57,11 @@ CREATE TABLE `sale_items` (
   `stock_id` CHAR(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   
   `quantity` INT NOT NULL CHECK (`quantity` > 0),
-  `unit_price` DECIMAL(10, 2) NOT NULL,
+  `selling_price` DECIMAL(10, 2) NOT NULL,
   `glass_fine_per_unit` DECIMAL(10, 2) NOT NULL DEFAULT 0.00 COMMENT 'Fines charged if bottles are taken away',
-  `subtotal` DECIMAL(10, 2) GENERATED ALWAYS AS (`quantity` * (`unit_price` + `glass_fine_per_unit`)) STORED,
+  glass_status VARCHAR(20) DEFAULT NULL;
+  `subtotal` DECIMAL(10, 2),
+  profit DECIMAL(10,2) NOT NULL DEFAULT 0.00,
   PRIMARY KEY (`id`),
   
   -- Links to sales (utf8mb4_0900_ai_ci)

@@ -1,0 +1,72 @@
+{
+    "id": "eb0721fb-0da7-4236-9d40-04bc3322bd32",
+    "item_name": "Soft Drinks Item 111",
+    "item_type": "Direct Sale",
+    "category": "Soft Drinks",
+    "barcode": "BC00000111",
+    "unit_type": "Pack",
+    "full_quantity": "274",
+    "empty_quantity": "0",
+    "low_stock_alert_level": "29",
+    "cost_price": "4284.71",
+    "selling_price": "4688.46",
+    "expected_profit": "403.75",
+    "deleted_at": null,
+    "created_at": "2026-07-10T14:51:51.000Z"
+}
+
+{
+    "id": "1c7e07e8-e1a3-4a87-a551-8fe1162fbc4c",
+    "item_name": "Snacks Item 115",
+    "item_type": "Direct Sale",
+    "category": "Snacks",
+    "barcode": "BC00000115",
+    "unit_type": "Pack",
+    "full_quantity": "123",
+    "empty_quantity": "0",
+    "low_stock_alert_level": "29",
+    "cost_price": "1900.50",
+    "selling_price": "2213.75",
+    "expected_profit": "313.25",
+    "deleted_at": null,
+    "created_at": "2026-07-10T14:51:51.000Z"
+}
+
+{
+    "id": "71ad2a93-5494-4943-ac9d-9cd840afc9d3",
+    "item_name": "Beer Item 105",
+    "item_type": "Direct Sale",
+    "category": "Beer",
+    "barcode": "BC00000105",
+    "unit_type": "Bottle",
+    "full_quantity": "16",
+    "empty_quantity": "12",
+    "low_stock_alert_level": "22",
+    "cost_price": "14194.50",
+    "selling_price": "18947.22",
+    "expected_profit": "4752.72",
+    "deleted_at": null,
+    "created_at": "2026-07-10T14:51:51.000Z"
+}
+
+{
+    "id": "e990353d-68c0-456f-a994-8c1d6d212307",
+    "item_name": "Beer Item 233",
+    "item_type": "Direct Sale",
+    "category": "Beer",
+    "barcode": "BC00000233",
+    "unit_type": "Bottle",
+    "full_quantity": "200",
+    "empty_quantity": "23",
+    "low_stock_alert_level": "13",
+    "cost_price": "8223.59",
+    "selling_price": "12767.78",
+    "expected_profit": "4544.19",
+    "deleted_at": null,
+    "created_at": "2026-07-10T14:51:53.000Z"
+}
+
+SELECT * FROM stock WHERE id IN ("eb0721fb-0da7-4236-9d40-04bc3322bd32", "1c7e07e8-e1a3-4a87-a551-8fe1162fbc4c", "71ad2a93-5494-4943-ac9d-9cd840afc9d3", "e990353d-68c0-456f-a994-8c1d6d212307");
+
+select * from stock where id = "eb0721fb-0da7-4236-9d40-04bc3322bd32"; select * from stock where id = "1c7e07e8-e1a3-4a87-a551-8fe1162fbc4c"; select * from sales order by invoice_number; select * from sale_items;
+

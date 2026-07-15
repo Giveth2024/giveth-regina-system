@@ -1,5 +1,6 @@
 const express = require("express");
-const dotenv = require("dotenv").config();
+const dotenv = require("dotenv");
+dotenv.config()
 const morgan = require('morgan');
 const helmet = require('helmet');
 const { rateLimit } = require('express-rate-limit');
@@ -11,6 +12,7 @@ const db = require('./config/db');
 // Routes
 const authRoutes = require('./Routes/authRoutes');
 const stockRoutes = require('./Routes/stockRoutes');
+const salesRoutes = require('./Routes/salesRoutes');
 const { errorResponse } = require("./Helpers/helpers");
 
 const app = express();
@@ -46,6 +48,7 @@ app.use(cookieParser());
 //Auth routes
 app.use("/api/giveth/auth", authRoutes);
 app.use("/api/giveth/stock", stockRoutes);
+app.use("/api/giveth/sales", salesRoutes);
 
 app.get("/", (req, res) => {
     res.json({message: "Server is running"});
@@ -81,8 +84,10 @@ app.use((err, req, res, next) => {
 
     res.status(500).json({
         success : false,
-        message: "Internal Server Error"
+        message: err.message || "Internal Server Error"
     });
+
+    next();
 });
 
 app.listen(PORT, () => {

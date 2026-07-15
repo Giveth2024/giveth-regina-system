@@ -1,0 +1,211 @@
+This is actually a different business event from a sale, and it's good that you're thinking about it now. I **would not** record it through the sales endpoint.
+
+A sale means:
+
+> The business earned money by selling inventory.
+
+Spoilage means:
+
+> The business lost inventory without making a sale.
+
+Those are fundamentally different events.
+
+---
+
+## I would create a separate inventory adjustment / loss system
+
+For example:
+
+```text
+POST /api/giveth/losses/add
+```
+
+or, even more generally:
+
+```text
+POST /api/giveth/stock/adjust
+```
+
+with an adjustment type.
+
+---
+
+## Example request
+
+```json
+{
+    "user_id": "032c409e-2983-45ed-bbbe-e1012473c133",
+    "stock_id": "1c7e07e8-e1a3-4a87-a551-8fe1162fbc4c",
+    "quantity": 24,
+    "reason": "Spoiled",
+    "notes": "Power outage overnight"
+}
+```
+
+---
+
+## A losses table
+
+For example:
+
+```text
+losses
+-------
+id
+user_id
+stock_id
+quantity
+cost_price
+total_loss
+reason
+notes
+created_at
+```
+
+Example row:
+
+| stock   | qty |   cost | total_loss | reason  |
+| ------- | --: | -----: | ---------: | ------- |
+| Sausage |  24 | 395.83 |    9500.00 | Spoiled |
+
+Notice I would record the **cost price**, not the selling price, because the business lost what it paid for the stock. If you also want to estimate missed revenue, you can calculate that separately.
+
+---
+
+## What happens?
+
+When recording a loss:
+
+1. Validate that stock exists.
+2. Ensure there are at least 24 sausages in stock.
+3. Reduce stock by 24.
+4. Insert a row into `losses`.
+5. Commit the transaction.
+
+---
+
+## Will it affect the balance?
+
+Yes, but **indirectly**.
+
+Think of it like this:
+
+### Sales
+
+Increase revenue.
+
+```
+Revenue +17,500
+```
+
+---
+
+### Expenses
+
+Decrease cash.
+
+```
+Bought cooking oil
+-50,000
+```
+
+---
+
+### Losses
+
+Decrease inventory value.
+
+```
+24 sausages spoiled
+Inventory -9,500
+```
+
+No cash leaves the till that day, but the business has lost value because inventory that was purchased can no longer be sold.
+
+---
+
+## Reports become much richer
+
+For a given day you might see:
+
+```
+Sales
+----------------
+Revenue          560,000
+
+Expenses
+----------------
+Gas               40,000
+Transport         15,000
+
+Inventory Losses
+----------------
+Spoiled sausages   9,500
+Broken bottles     6,000
+
+Net Profit
+----------------
+560,000
+-55,000
+-15,500
+----------------
+489,500
+```
+
+---
+
+## Should it have its own endpoint?
+
+Yes.
+
+I would keep these operations separate because they represent different business actions:
+
+```
+POST /sales/add
+```
+
+A customer bought something.
+
+```
+POST /expenses/add
+```
+
+The business spent money.
+
+```
+POST /losses/add
+```
+
+The business lost inventory.
+
+```
+POST /stock/add
+```
+
+New inventory arrived.
+
+---
+
+### My recommendation
+
+Rather than creating a table that's only for losses, I'd consider a more general **`stock_adjustments`** table. It can record any manual change to inventory:
+
+| adjustment_type      | Example                        |
+| -------------------- | ------------------------------ |
+| `Loss`               | Spoiled sausages               |
+| `Damage`             | Broken bottle                  |
+| `Theft`              | Missing inventory              |
+| `Correction`         | Fixed an incorrect stock count |
+| `Donation`           | Gave food away                 |
+| `Return to Supplier` | Sent damaged goods back        |
+
+Then every adjustment records:
+
+* who made it (`user_id`)
+* which stock item (`stock_id`)
+* quantity changed
+* reason/type
+* notes
+* timestamp
+
+Your stock is updated accordingly, and your reports can filter by adjustment type. It's more flexible than a dedicated `losses` table and will likely cover future inventory scenarios without needing another schema redesign.
