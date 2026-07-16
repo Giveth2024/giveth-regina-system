@@ -1,41 +1,98 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Regina POS API</title>
 
-    <link rel="stylesheet" href="./css/output.css">
-</head>
-<body class="min-h-screen bg-gray-100 flex items-center justify-center">
+    <link rel="stylesheet" href="./css/output.css" />
 
-    <div class="w-full max-w-lg bg-white rounded-xl shadow-lg p-10 text-center">
+    <style>
+      .loader {
+        --color-1: #fff;
+        --color-2: #d4af37;
+        --size: 1px;
 
-        <h1 class="text-4xl font-bold text-blue-600 mb-4">
-            🚀 Regina POS API
-        </h1>
+        width: calc(48 * var(--size));
+        height: calc(48 * var(--size));
+        border-radius: 50%;
+        display: inline-block;
+        border-top: calc(4 * var(--size)) solid var(--color-1);
+        border-right: calc(4 * var(--size)) solid transparent;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+      }
+      .loader::after {
+        content: "";
+        box-sizing: border-box;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: calc(48 * var(--size));
+        height: calc(48 * var(--size));
+        border-radius: 50%;
+        border-bottom: calc(4 * var(--size)) solid var(--color-2);
+        border-left: calc(4 * var(--size)) solid transparent;
+      }
+      @keyframes rotation {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
 
-        <p class="text-gray-700 mb-2">
-            The backend server is running successfully.
-        </p>
+  <body class="min-h-screen bg-[#0A0A0A] flex items-center justify-center px-6">
+    <div class="max-w-xl w-full text-center">
+      <div
+        class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/20 mb-8"
+      >
+        <span class="text-4xl">🛒</span>
+      </div>
 
-        <p class="text-gray-700 mb-6">
-            Use the API endpoints to interact with the system.
-        </p>
+      <h1 class="text-5xl font-bold text-white mb-4">Regina POS API</h1>
 
-        <p class="text-gray-600 font-medium mb-2">
-            Base URL:
-        </p>
+      <p class="text-xl text-[#D4AF37] font-medium mb-3">Server Online</p>
 
-        <code class="inline-block bg-gray-200 text-gray-800 px-3 py-1 rounded-md font-mono">
-            /api
-        </code>
+      <p class="text-[#9CA3AF] leading-7 mb-10">
+        Powering sales, inventory, expenses, reporting and business operations
+        for Regina POS.
+      </p>
 
-        <footer class="mt-8 text-sm text-gray-500">
-            &copy; 2026 Regina POS System
-        </footer>
+      <div class="flex justify-center mb-10">
+        <span class="loader"></span>
+      </div>
 
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-[#111111] rounded-xl border border-[#1E1E1E] p-5">
+          <h3 class="text-[#D4AF37] font-semibold mb-2">Sales</h3>
+
+          <p class="text-sm text-[#848884]">
+            Fast and secure transaction processing.
+          </p>
+        </div>
+
+        <div class="bg-[#111111] rounded-xl border border-[#1E1E1E] p-5">
+          <h3 class="text-[#D4AF37] font-semibold mb-2">Inventory</h3>
+
+          <p class="text-sm text-[#848884]">Live stock tracking and updates.</p>
+        </div>
+
+        <div class="bg-[#111111] rounded-xl border border-[#1E1E1E] p-5">
+          <h3 class="text-[#D4AF37] font-semibold mb-2">Reports</h3>
+
+          <p class="text-sm text-[#848884]">
+            Daily business insights and analytics.
+          </p>
+        </div>
+      </div>
+
+      <p class="mt-10 text-xs text-[#666]">
+        Regina POS High-Velocity System • API v1
+      </p>
     </div>
-
-</body>
+  </body>
 </html>
