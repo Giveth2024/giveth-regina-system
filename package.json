@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "eslint": "npx eslint --init",
-    "tailwind" : "npx @tailwindcss/cli -i input.css -o ./public/css/output.css --watch",
+    "tailwind": "npx @tailwindcss/cli -i input.css -o ./public/css/output.css --watch",
     "dev": "nodemon server.js"
   },
   "keywords": [],
