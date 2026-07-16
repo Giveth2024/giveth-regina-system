@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const { rateLimit } = require('express-rate-limit');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 
 const db = require('./config/db');
 
@@ -13,13 +14,14 @@ const db = require('./config/db');
 const authRoutes = require('./Routes/authRoutes');
 const stockRoutes = require('./Routes/stockRoutes');
 const salesRoutes = require('./Routes/salesRoutes');
+const webRoutes = require('./Routes/webRoutes');
 const { errorResponse } = require("./Helpers/helpers");
 
 const app = express();
 const PORT = process.env.PORT;
 
 // Middlware
-// HTTP Hader Security
+// HTTP Header Security
 app.use(helmet());
 
 // Response Compression
@@ -53,6 +55,12 @@ app.use("/api/giveth/sales", salesRoutes);
 app.get("/", (req, res) => {
     res.json({message: "Server is running"});
 });
+
+// load html files
+app.use(express.static(path.join(__dirname, "public")));
+
+// Web Routes
+app.use("/frontend", webRoutes);
 
 // Error for routes that are not created 
 app.use((req, res) => {
