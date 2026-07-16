@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Stock - Giveth POS</title>
+
+    <link rel="stylesheet" href="../css/output.css" />
+    <link rel="shortcut icon" href="../assets/logo.jpg" type="image/x-icon" />
+  </head>
+  <body class="min-h-screen bg-[#0A0A0A] text-white">
+    <header>
+
+    </header>
+
+    <div class="max-w-4xl mx-auto my-10 px-6 py-10">
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-[#D4AF37]">Add Stock</h1>
+
+        <p class="text-gray-400 mt-2">Enter the product information below.</p>
+      </div>
+
+      <!-- Form Card -->
+      <div
+        class="bg-[#1A1A1A] rounded-2xl border border-[#2C2C2C] p-8 shadow-lg"
+      >
+        <form class="space-y-6">
+          <!-- Item Name -->
+          <div>
+            <label class="block mb-2 text-sm text-gray-300"> Item Name </label>
+
+            <input
+              type="text"
+              placeholder="Sprite Lemon-Lime Flavored Carbonated Soft Drink 330ml"
+              class="w-full rounded-lg bg-[#111111] border border-[#333333] px-4 py-3 focus:outline-none focus:border-[#D4AF37]"
+            />
+          </div>
+
+          <!-- Row -->
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="block mb-2 text-sm text-gray-300">
+                Item Type
+              </label>
+
+              <select
+                class="w-full rounded-lg bg-[#111111] border border-[#333333] px-4 py-3 focus:outline-none focus:border-[#D4AF37]"
+              >
+                <option>Direct Sale</option>
+                <option>Ingredient</option>
+                <option>Raw Material</option>
+                <option>Service</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block mb-2 text-sm text-gray-300"> Category </label>
+
+              <select
+                class="w-full rounded-lg bg-[#111111] border border-[#333333] px-4 py-3 focus:outline-none focus:border-[#D4AF37]"
+              >
+                <option>Soft Drinks</option>
+                <option>Beer</option>
+                <option>Wine</option>
+                <option>Spirits</option>
+                <option>Water</option>
+                <option>Juice</option>
+                <option>Snacks</option>
+                <option>Breakfast</option>
+                <option>Food</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Barcode -->
+          <div>
+            <label class="block mb-2 text-sm text-gray-300"> Barcode </label>
+
+            <div class="flex gap-3">
+              <input
+                type="text"
+                placeholder="457687865454"
+                class="flex-1 rounded-lg bg-[#111111] border border-[#333333] px-4 py-3 focus:outline-none focus:border-[#D4AF37]"
+              />
+
+              <button
+                type="button"
+                class="flex items-center justify-center gap-2 px-4 rounded-lg bg-[#D4AF37] text-black font-medium hover:bg-[#C49B2E] transition"
+              >
+                <!-- Barcode Icon -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    d="M3 4h1v16H3V4zm2 0h2v16H5V4zm3 0h1v16H8V4zm3 0h2v16h-2V4zm3 0h1v16h-1V4zm2 0h3v16h-3V4z"
+                  />
+                </svg>
+
+                Scan
+              </button>
+            </div>
+          </div>
+          <!-- Unit -->
+          <div>
+            <label class="block mb-2 text-sm text-gray-300"> Unit Type </label>
+
+            <select
+              class="w-full rounded-lg bg-[#111111] border border-[#333333] px-4 py-3 focus:outline-none focus:border-[#D4AF37]"
+            >
+              <option>Plastic</option>
+              <option>Bottle</option>
+              <option>Pack</option>
+              <option>Box</option>
+              <option>Piece</option>
+              <option>Carton</option>
+              <option>Crate</option>
+            </select>
+          </div>
+
+          <!-- Quantities -->
+          <div class="grid md:grid-cols-3 gap-6">
+            <div>
+              <label class="block mb-2 text-sm text-gray-300">
+                Full Quantity
+              </label>
+
+              <input
+                type="number"
+                placeholder="13"
+                class="w-full rounded-lg bg-[#111111] border border-[#333333] px-4 py-3 focus:outline-none focus:border-[#D4AF37]"
+              />
+            </div>
+
+            <div>
+              <label class="block mb-2 text-sm text-gray-300">
+                Empty Quantity
+              </label>
+
+              <input
+                type="number"
+                placeholder="0"
+                class="w-full rounded-lg bg-[#111111] border border-[#333333] px-4 py-3 focus:outline-none focus:border-[#D4AF37]"
+              />
+            </div>
+
+            <div>
+              <label class="block mb-2 text-sm text-gray-300">
+                Low Stock Alert
+              </label>
+
+              <input
+                type="number"
+                placeholder="10"
+                class="w-full rounded-lg bg-[#111111] border border-[#333333] px-4 py-3 focus:outline-none focus:border-[#D4AF37]"
+              />
+            </div>
+          </div>
+
+          <!-- Prices -->
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="block mb-2 text-sm text-gray-300">
+                Cost Price (UGX)
+              </label>
+
+              <input
+                type="number"
+                step="0.01"
+                placeholder="833.33"
+                class="w-full rounded-lg bg-[#111111] border border-[#333333] px-4 py-3 focus:outline-none focus:border-[#D4AF37]"
+              />
+            </div>
+
+            <div>
+              <label class="block mb-2 text-sm text-gray-300">
+                Selling Price (UGX)
+              </label>
+
+              <input
+                type="number"
+                step="0.01"
+                placeholder="1000.00"
+                class="w-full rounded-lg bg-[#111111] border border-[#333333] px-4 py-3 focus:outline-none focus:border-[#D4AF37]"
+              />
+            </div>
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex justify-end gap-4 pt-4">
+            <button
+              type="reset"
+              class="px-6 py-3 rounded-lg border border-gray-600 hover:bg-gray-700 transition"
+            >
+              Clear
+            </button>
+
+            <button
+              type="submit"
+              class="px-6 py-3 rounded-lg bg-[#D4AF37] text-black font-semibold hover:bg-[#C49B2E] transition"
+            >
+              Save Stock
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
