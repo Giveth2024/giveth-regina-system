@@ -57,7 +57,9 @@ app.get("/", (req, res) => {
 });
 
 // load html files
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public"))); 
+app.use("/frontend", express.static(path.join(__dirname, "public"))); 
+
 
 // Web Routes
 app.use("/frontend", webRoutes);
