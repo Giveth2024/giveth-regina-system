@@ -1,0 +1,527 @@
+# Regina POS High-Velocity System
+
+## Frontend Design Guide
+
+==================================================
+
+1. DESIGN PHILOSOPHY
+   ==================================================
+
+Regina POS should feel:
+
+* Fast
+* Modern
+* Professional
+* Clean
+* Easy to understand
+* Comfortable for long hours of use
+
+Avoid unnecessary animations, excessive colors, or cluttered layouts.
+
+Every screen should help the cashier or administrator complete a task quickly.
+
+---
+
+==================================================
+2. COLOR PALETTE
+================
+
+Primary Background
+#0A0A0A
+
+Secondary Background
+#111111
+
+Card Background
+#181818
+
+Borders
+#2A2A2A
+
+Primary Accent
+#D4AF37
+
+Primary Text
+#FFFFFF
+
+Secondary Text
+#B0B0B0
+
+Muted Text
+#848884
+
+Success
+#22C55E
+
+Warning
+#F59E0B
+
+Danger
+#EF4444
+
+Information
+#3B82F6
+
+---
+
+==================================================
+3. TYPOGRAPHY
+=============
+
+Use clean sans-serif fonts.
+
+Preferred:
+
+* Inter
+* Poppins
+* Geist
+* System UI
+
+Rules
+
+Main Heading
+Bold
+Large
+
+Section Heading
+Semi Bold
+
+Normal Text
+Regular
+
+Muted Text
+Light Gray
+
+Never use decorative fonts.
+
+---
+
+==================================================
+4. BORDER RADIUS
+================
+
+Buttons
+rounded-lg
+
+Cards
+rounded-xl
+
+Inputs
+rounded-lg
+
+Modals
+rounded-2xl
+
+---
+
+==================================================
+5. SPACING
+==========
+
+Use generous spacing.
+
+Recommended
+
+Padding
+p-4
+p-5
+p-6
+
+Gap
+gap-4
+gap-6
+
+Margin Bottom
+
+mb-4
+mb-6
+mb-8
+
+Avoid cramped layouts.
+
+---
+
+==================================================
+6. BUTTON DESIGN
+================
+
+Primary
+
+Background
+Gold
+
+Text
+Black
+
+Hover
+Slightly darker gold
+
+Secondary
+
+Dark background
+
+Light border
+
+White text
+
+Danger
+
+Red background
+
+White text
+
+Buttons should always have
+
+cursor-pointer
+transition
+hover effects
+
+---
+
+==================================================
+7. INPUT DESIGN
+===============
+
+Dark background
+
+Thin border
+
+Rounded corners
+
+Good padding
+
+Focus border should use the gold accent.
+
+Example
+
+Background
+
+#111111
+
+Border
+
+#2A2A2A
+
+Focus
+
+#D4AF37
+
+---
+
+==================================================
+8. CARDS
+========
+
+Every major section should use cards.
+
+Cards contain
+
+Title
+
+Description
+
+Content
+
+Optional action buttons
+
+Cards should have
+
+Dark background
+
+Rounded corners
+
+Thin border
+
+Consistent padding
+
+---
+
+==================================================
+9. TABLES
+=========
+
+Tables are the most important component.
+
+Requirements
+
+Sticky header
+
+Alternating row colors
+
+Hover effect
+
+Compact rows
+
+Search above table
+
+Filters above table
+
+Pagination below table
+
+Columns should never feel cramped.
+
+---
+
+==================================================
+10. ICONS
+=========
+
+Use one icon style consistently.
+
+Recommended
+
+Heroicons
+
+Lucide
+
+Font Awesome
+
+Icons should be simple.
+
+Avoid colorful icons.
+
+---
+
+==================================================
+11. PAGE LAYOUT
+===============
+
+Every page should follow
+
+Header
+
+↓
+
+Toolbar
+
+↓
+
+Search
+
+↓
+
+Filters
+
+↓
+
+Main Content
+
+↓
+
+Pagination
+
+Do not mix unrelated components together.
+
+---
+
+==================================================
+12. SEARCH BAR
+==============
+
+Large
+
+Easy to access
+
+Rounded
+
+Search icon on the left
+
+Placeholder examples
+
+Search products...
+
+Search invoices...
+
+Search customers...
+
+---
+
+==================================================
+13. FILTERS
+===========
+
+Use dropdowns whenever possible.
+
+Examples
+
+Category
+
+Item Type
+
+Payment Type
+
+Stock Status
+
+Date
+
+Price Range
+
+Filters should stay above the table.
+
+---
+
+==================================================
+14. DASHBOARD CARDS
+===================
+
+Cards should display
+
+Sales Today
+
+Revenue
+
+Profit
+
+Expenses
+
+Customers
+
+Stock Alerts
+
+Each card
+
+Large number
+
+Small description
+
+Small icon
+
+---
+
+==================================================
+15. STATUS COLORS
+=================
+
+Success
+
+Green
+
+Warning
+
+Yellow
+
+Danger
+
+Red
+
+Information
+
+Blue
+
+Never rely on color alone.
+
+Use text labels too.
+
+---
+
+==================================================
+16. MODALS
+==========
+
+Dark background
+
+Rounded corners
+
+Clear title
+
+Large close button
+
+Primary action button
+
+Secondary cancel button
+
+---
+
+==================================================
+17. ANIMATIONS
+==============
+
+Keep animations subtle.
+
+Allowed
+
+Fade
+
+Scale
+
+Slide
+
+Duration
+
+150ms–250ms
+
+Avoid flashy animations.
+
+Speed is more important.
+
+---
+
+==================================================
+18. RESPONSIVENESS
+==================
+
+Desktop first.
+
+Support
+
+Desktop
+
+Laptop
+
+Tablet
+
+Mobile
+
+Tables may scroll horizontally on smaller screens.
+
+---
+
+==================================================
+19. LOADING STATES
+==================
+
+Always show loading feedback.
+
+Use the Regina POS loader consistently.
+
+Avoid blank pages.
+
+---
+
+==================================================
+20. EMPTY STATES
+================
+
+Instead of blank tables
+
+Show
+
+Icon
+
+Friendly message
+
+Optional action button
+
+Example
+
+"No products found."
+
+---
+
+==================================================
+21. DESIGN PRINCIPLES
+=====================
+
+Consistency over creativity.
+
+Every page should feel like part of the same application.
+
+Users should immediately know
+
+where they are,
+
+what they can do,
+
+and what to do next.
+
+The interface should prioritize speed, readability, and efficiency for cashiers, managers, and administrators who use the system throughout the day.
