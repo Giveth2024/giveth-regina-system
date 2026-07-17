@@ -1,4 +1,4 @@
-function navbar() {
+ export function navbar() {
     return `
       <nav
        class="sticky top-0 z-50 w-full bg-[#0A0A0A] border-b border-[#2A2A2A]"

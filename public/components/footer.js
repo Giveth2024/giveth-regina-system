@@ -1,4 +1,4 @@
-function footer() {
+export function footer() {
     return `
     <footer class="mt-16 border-t border-[#2A2A2A] bg-[#0A0A0A]">
 
