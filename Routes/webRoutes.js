@@ -15,7 +15,11 @@ router.get("/auth/login", (req, res) => {
 
 // Stock Pages
 router.get("/stock/add", (req, res) => {
-    res.sendFile(path.join(__dirname, '..', "public", "stock", "addStock.html"))
+    res.sendFile(path.join(__dirname, '..', "public", "stock", "addStock.html"));
+});
+
+router.get("/stock/view", (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "public", "stock", "viewStock.html"));
 });
 
 module.exports = router;
