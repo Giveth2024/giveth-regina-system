@@ -1,7 +1,7 @@
 function navbar() {
     return `
       <nav
-        class="fixed top-0 left-0 z-50 w-full bg-[#0A0A0A] border-b border-[#2A2A2A]"
+       class="sticky top-0 z-50 w-full bg-[#0A0A0A] border-b border-[#2A2A2A]"
       >
         <div
           class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"
