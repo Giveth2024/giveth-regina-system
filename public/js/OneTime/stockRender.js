@@ -42,7 +42,6 @@ export function renderStockTable(stockData) {
         rowItem.statusClass = "low";
     }else
     {
-        console.log("Out of Stock");
         rowItem.status = "Out of Stock";
         rowItem.statusClass = "out";
     }
