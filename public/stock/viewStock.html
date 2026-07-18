@@ -213,7 +213,7 @@
 
       .pagination {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         gap: 12px;
         margin-top: 18px;
@@ -288,23 +288,34 @@
             <div class="filter-group">
               <label>Category</label>
               <select id="category">
-                <option disabled selected>All Categories</option>
+                <option value="" selected>All Categories</option>
+                <option value="Soft Drinks">Soft Drinks</option>
                 <option value="Beer">Beer</option>
+                <option value="Wine">Wine</option>
+                <option value="Spirits">Spirits</option>
+                <option value="Water">Water</option>
                 <option value="Juice">Juice</option>
+                <option value="Snacks">Snacks</option>
+                <option value="BreakFast">Breakfast</option>
+                <option value="Food">Food</option>
               </select>
             </div>
             <div class="filter-group">
-              <label>Item Type</label>
-              <select>
-                <option>All Types</option>
+              <label selected>All Item Types</label>
+              <select id="item_type">
+                <option value="">All Types</option>
+                <option value="Direct Sale">Direct Sale</option>
+                <option value="Kitchen">Kitchen</option>
               </select>
             </div>
             <div class="filter-group">
               <label>Sort By</label>
-              <select>
-                <option>Item Name</option>
-                <option>Quantity</option>
-                <option>Selling Price</option>
+              <select id="sort_by">
+                <option value="">Item Name</option>
+                <option>Category</option>
+                <option>Item Type</option>
+                <option>Unit Type</option>
+                <!-- <option>Selling Price</option> -->
               </select>
             </div>
           </div>
@@ -333,20 +344,20 @@
   
           <div class="checkbox-list">
             <label class="checkbox-item"
-              ><input type="checkbox" /> Low Stock</label
+              ><input type="checkbox" id="low_stock"/> Low Stock</label
             >
             <label class="checkbox-item"
-              ><input type="checkbox" /> Out of Stock</label
+              ><input type="checkbox" id="out_of_stock" /> Out of Stock</label
             >
             <label class="checkbox-item"
-              ><input type="checkbox" /> No Empty Bottles</label
+              ><input type="checkbox" id="no_empty_bottles" /> No Empty Bottles</label
             >
             <label class="checkbox-item"
-              ><input type="checkbox" /> Has Empty Bottles</label
+              ><input type="checkbox" id="has_empty_bottles" /> Has Empty Bottles</label
             >
-            <label class="checkbox-item"
-              ><input type="checkbox" /> Deleted Items</label
-            >
+            <!-- <label class="checkbox-item"
+              ><input type="checkbox" id="viewingDeleted" /> Deleted Items</label
+            > -->
           </div>
         </section>
       </form>
@@ -360,13 +371,13 @@
           <h3>Total Inventory</h3>
           <div class="value">1,482</div>
         </div> -->
-        <div class="summary-card">
+        <!-- <div class="summary-card">
           <h3>Low Stock</h3>
           <div class="value orange">8</div>
         </div>
         <div class="summary-card">
           <h3>Out of Stock</h3>
-          <div class="value red">3</div>
+          <div class="value red">3</div> -->
         </div>
       </section>
 
@@ -386,20 +397,16 @@
             </tr>
           </thead>
           <tbody id="tableBody">
-            <!-- Place the component here -->
-            <!-- <script type="module" src="../components/viewStockRow.js"></script> -->
+            <!-- Render the table row the component here -->
           </tbody>
         </table>
       </section>
 
       <section class="pagination">
-        <div>Showing 1 to 3 of 50 entries</div>
         <div class="page-links">
-          <button>«</button>
-          <button class="active">1</button>
-          <button>2</button>
-          <button>3</button>
-          <button>»</button>
+          <button id="previousPage">«</button>
+          <button class="active" id="currentPage">1</button>
+          <button id="nextPage">»</button>
         </div>
       </section>
     </main>
