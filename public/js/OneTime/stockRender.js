@@ -6,12 +6,13 @@ export function renderStockTable(stockData) {
   // Set count for items
   document.getElementById("countItems").innerHTML = stockData.data.count
 
-    const tbody = document.getElementById("tableBody");
-    tbody.innerHTML = "";
-
   //   console.log(stockData);
   // get items in the array
   const stockItems = stockData.data.data;
+
+  const tbody = document.getElementById("tableBody");
+  tbody.innerHTML = "";
+
   for (const stockItem of stockItems) {
     const rowItem = {
         id: stockItem.id,

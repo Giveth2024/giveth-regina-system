@@ -277,75 +277,79 @@
         <button class="btn btn-primary" id="addItem">+ Add New Item</button>
       </section>
 
-      <section class="card">
-        <h2>Quick Filters</h2>
-        <div class="filters">
-          <div class="filter-group">
-            <label>Search</label>
-            <input type="text" placeholder="Name or barcode..." />
+      <form action="GET" id="viewStockForm">
+        <section class="card">
+          <h2>Quick Filters</h2>
+          <div class="filters">
+            <div class="filter-group">
+              <label>Search</label>
+              <input type="text" id="search" placeholder="Name or Item id or barcode..." />
+            </div>
+            <div class="filter-group">
+              <label>Category</label>
+              <select id="category">
+                <option disabled selected>All Categories</option>
+                <option value="Beer">Beer</option>
+                <option value="Juice">Juice</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Item Type</label>
+              <select>
+                <option>All Types</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Sort By</label>
+              <select>
+                <option>Item Name</option>
+                <option>Quantity</option>
+                <option>Selling Price</option>
+              </select>
+            </div>
           </div>
-          <div class="filter-group">
-            <label>Category</label>
-            <select>
-              <option>All Categories</option>
-            </select>
+        </section>
+  
+        <section class="card">
+          <h2>Advanced Options</h2>
+          <div class="filters">
+            <div class="filter-group">
+              <label>Min Quantity</label>
+              <input type="number" placeholder="0" />
+            </div>
+            <div class="filter-group">
+              <label>Max Quantity</label>
+              <input type="number" placeholder="No limit" />
+            </div>
+            <div class="filter-group">
+              <label>Min Selling Price</label>
+              <input type="number" placeholder="Min" />
+            </div>
+            <div class="filter-group">
+              <label>Max Selling Price</label>
+              <input type="number" placeholder="Max" />
+            </div>
           </div>
-          <div class="filter-group">
-            <label>Item Type</label>
-            <select>
-              <option>All Types</option>
-            </select>
+  
+          <div class="checkbox-list">
+            <label class="checkbox-item"
+              ><input type="checkbox" /> Low Stock</label
+            >
+            <label class="checkbox-item"
+              ><input type="checkbox" /> Out of Stock</label
+            >
+            <label class="checkbox-item"
+              ><input type="checkbox" /> No Empty Bottles</label
+            >
+            <label class="checkbox-item"
+              ><input type="checkbox" /> Has Empty Bottles</label
+            >
+            <label class="checkbox-item"
+              ><input type="checkbox" /> Deleted Items</label
+            >
           </div>
-          <div class="filter-group">
-            <label>Sort By</label>
-            <select>
-              <option>Item Name</option>
-              <option>Quantity</option>
-              <option>Selling Price</option>
-            </select>
-          </div>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2>Advanced Options</h2>
-        <div class="filters">
-          <div class="filter-group">
-            <label>Min Quantity</label>
-            <input type="number" placeholder="0" />
-          </div>
-          <div class="filter-group">
-            <label>Max Quantity</label>
-            <input type="number" placeholder="No limit" />
-          </div>
-          <div class="filter-group">
-            <label>Min Selling Price</label>
-            <input type="number" placeholder="Min" />
-          </div>
-          <div class="filter-group">
-            <label>Max Selling Price</label>
-            <input type="number" placeholder="Max" />
-          </div>
-        </div>
-
-        <div class="checkbox-list">
-          <label class="checkbox-item"
-            ><input type="checkbox" /> Low Stock</label
-          >
-          <label class="checkbox-item"
-            ><input type="checkbox" /> Out of Stock</label
-          >
-          <label class="checkbox-item"
-            ><input type="checkbox" /> No Empty Bottles</label
-          >
-          <label class="checkbox-item"
-            ><input type="checkbox" /> Has Empty Bottles</label
-          >
-          <label class="checkbox-item"
-            ><input type="checkbox" /> Deleted Items</label
-          >
-        </div>
-      </section>
+        </section>
+      </form>
 
       <section class="summary-grid">
         <div class="summary-card">

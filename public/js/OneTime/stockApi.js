@@ -5,7 +5,6 @@ export async function getStock(filters = {}) {
 
     const response = await fetch(`/api/giveth/stock?${params}`);
     const data = await response.json();
-    if (!data.success) return alert(data.message);
     console.log(data.message);
     return data;
   } catch (error) {
