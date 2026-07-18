@@ -20,8 +20,21 @@ async function getStockFilters()
     clearTimeout(timer);
     timer = setTimeout(async () => {        
         const search = document.getElementById('search').value;
-        console.log(search);
-        const stock = await getStock({search : search});
+        const min_quantity = document.getElementById('min_quantity').value;
+        const max_quantity = document.getElementById('max_quantity').value;
+        const min_selling_price = document.getElementById("min_selling_price").value;
+        const max_selling_price = document.getElementById("max_selling_price").value;
+
+        const inputFilters = {
+            search : search,
+            min_quantity : min_quantity,
+            max_quantity : max_quantity,
+            min_selling_price : min_selling_price,
+            max_selling_price : max_selling_price
+        }
+
+        console.log(inputFilters);
+        const stock = await getStock(inputFilters);
         if (!stock.success) return alert(stock.message);
         renderStockTable(stock);
     }, 1000); // wait one second before fetching
