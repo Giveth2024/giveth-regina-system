@@ -11,22 +11,31 @@ let currentPage = 1;
 const nextPageButton = document.getElementById('nextPage');
 const previousPageButton = document.getElementById('previousPage');
 
-nextPageButton.addEventListener("click", () => {
-    currentPage += 1;
-    document.getElementById('currentPage').innerHTML = currentPage;
-    getStockFilters();
-});
+if (nextPageButton)
+{
+    nextPageButton.addEventListener("click", () => {
+        currentPage += 1;
+        document.getElementById('currentPage').innerHTML = currentPage;
+        getStockFilters();
+    });
+}
 
-previousPageButton.addEventListener("click", () => {
-    currentPage -= 1;
-    if(currentPage < 1) return alert("Page connot be negative");
-    document.getElementById('currentPage').innerHTML = currentPage;
-    getStockFilters();
-});
+if (previousPageButton)
+{
+    previousPageButton.addEventListener("click", () => {
+        currentPage -= 1;
+        if(currentPage < 1) return alert("Page connot be negative");
+        document.getElementById('currentPage').innerHTML = currentPage;
+        getStockFilters();
+    });
+}
 
-document.getElementById("addItem").addEventListener("click", () => {
-    window.location.href = "/frontend/stock/add"
-});
+if (document.getElementById("addItem"))
+{
+    document.getElementById("addItem").addEventListener("click", () => {
+        window.location.href = "/frontend/stock/add"
+    });
+}
 
 const stock = await getStock();
 renderStockTable(stock);
@@ -86,5 +95,9 @@ async function getStockFilters()
 }
 
 const viewStockForm = document.getElementById("viewStockForm");
-viewStockForm.addEventListener("input", getStockFilters);
-viewStockForm.addEventListener("change", getStockFilters);
+
+if (viewStockForm)
+{
+    viewStockForm.addEventListener("input", getStockFilters);
+    viewStockForm.addEventListener("change", getStockFilters);
+}

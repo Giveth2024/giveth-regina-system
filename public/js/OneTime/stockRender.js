@@ -4,6 +4,7 @@ export function renderStockTable(stockData) {
 
   // Set  Data for viewing in html
   // Set count for items
+  if(!document.getElementById("countItems")) return;
   document.getElementById("countItems").innerHTML = stockData.data.count
 
   //   console.log(stockData);
