@@ -23,4 +23,8 @@ router.get("/stock/view", protect, (req, res) => {
     res.sendFile(path.join(__dirname, "..", "public", "stock", "viewStock.html"));
 });
 
+router.get("/sales/add", protect, (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "public", "sales", "addSales.html"))
+});
+
 module.exports = router;
