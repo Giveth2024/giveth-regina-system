@@ -58,338 +58,686 @@
       <!-- SELECTED ITEM -->
       <!-- ========================================= -->
 
-<section class="bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl p-6 my-10">
+      <section
+        class="bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl p-6 my-10"
+      >
+        <h2 class="text-lg font-semibold text-white mb-6">Selected Item</h2>
 
-    <h2 class="text-lg font-semibold text-white mb-6">
-        Selected Item
-    </h2>
+        <!-- ================================================= -->
+        <!-- PRODUCT INFORMATION -->
+        <!-- ================================================= -->
 
-    <!-- ================================================= -->
-    <!-- PRODUCT INFORMATION -->
-    <!-- ================================================= -->
-
-    <div class="mb-8">
-
-        <h3 class="text-sm font-semibold text-[#D4AF37] uppercase tracking-wider mb-4">
+        <div class="mb-8">
+          <h3
+            class="text-sm font-semibold text-[#D4AF37] uppercase tracking-wider mb-4"
+          >
             Product Information
-        </h3>
+          </h3>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
             <!-- Item Name -->
             <div class="lg:col-span-2">
-                <label class="block text-sm text-gray-400 mb-2">
-                    Item Name
-                </label>
+              <label class="block text-sm text-gray-400 mb-2">
+                Item Name
+              </label>
 
-                <input
-                    id="item_name"
-                    type="text"
-                    readonly
-                    placeholder="No item selected"
-                    class="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-gray-300"
-                >
+              <input
+                id="item_name"
+                type="text"
+                readonly
+                placeholder="No item selected"
+                class="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-gray-300"
+              />
             </div>
 
             <!-- Barcode -->
             <div>
+              <label class="block text-sm text-gray-400 mb-2"> Barcode </label>
 
-                <label class="block text-sm text-gray-400 mb-2">
-                    Barcode
-                </label>
-
-                <input
-                    id="barcode"
-                    type="text"
-                    readonly
-                    placeholder="Barcode"
-                    class="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-gray-300"
-                >
-
+              <input
+                id="barcode"
+                type="text"
+                readonly
+                placeholder="Barcode"
+                class="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-gray-300"
+              />
             </div>
 
             <!-- Category -->
             <div>
+              <label class="block text-sm text-gray-400 mb-2"> Category </label>
 
-                <label class="block text-sm text-gray-400 mb-2">
-                    Category
-                </label>
-
-                <input
-                    id="category"
-                    type="text"
-                    readonly
-                    class="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-gray-300"
-                >
-
+              <input
+                id="category"
+                type="text"
+                readonly
+                class="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-gray-300"
+              />
             </div>
-
+          </div>
         </div>
 
-    </div>
+        <!-- ================================================= -->
+        <!-- SALE DETAILS -->
+        <!-- ================================================= -->
 
-    <!-- ================================================= -->
-    <!-- SALE DETAILS -->
-    <!-- ================================================= -->
-
-    <div class="mb-8">
-
-        <h3 class="text-sm font-semibold text-[#D4AF37] uppercase tracking-wider mb-4">
+        <div class="mb-8">
+          <h3
+            class="text-sm font-semibold text-[#D4AF37] uppercase tracking-wider mb-4"
+          >
             Sale Details
-        </h3>
+          </h3>
 
-        <div class="grid md:grid-cols-3 gap-5">
-
+          <div class="grid md:grid-cols-3 gap-5">
             <div>
+              <label class="block text-sm text-gray-400 mb-2">
+                Unit Type
+              </label>
 
-                <label class="block text-sm text-gray-400 mb-2">
-                    Unit Type
-                </label>
-
-                <input
-                    id="unit_type"
-                    type="text"
-                    readonly
-                    class="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-gray-300"
-                >
-
+              <input
+                id="unit_type"
+                type="text"
+                readonly
+                class="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-gray-300"
+              />
             </div>
 
             <div>
+              <label class="block text-sm text-gray-400 mb-2"> Quantity </label>
 
-                <label class="block text-sm text-gray-400 mb-2">
-                    Quantity
-                </label>
-
-                <input
-                    id="quantity"
-                    type="number"
-                    min="1"
-                    value="1"
-                    class="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-white focus:border-[#D4AF37] focus:outline-none"
-                >
-
+              <input
+                id="quantity"
+                type="number"
+                min="1"
+                value="1"
+                class="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-white focus:border-[#D4AF37] focus:outline-none"
+              />
             </div>
 
             <div>
+              <label class="block text-sm text-gray-400 mb-2">
+                Selling Price (UGX)
+              </label>
 
-                <label class="block text-sm text-gray-400 mb-2">
-                    Selling Price (UGX)
-                </label>
-
-                <input
-                    id="selling_price"
-                    type="number"
-                    class="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-white focus:border-[#D4AF37] focus:outline-none"
-                >
-
+              <input
+                id="selling_price"
+                type="number"
+                class="w-full bg-[#111111] border border-[#333333] rounded-lg px-4 py-3 text-white focus:border-[#D4AF37] focus:outline-none"
+              />
             </div>
-
+          </div>
         </div>
 
-    </div>
+        <!-- ================================================= -->
+        <!-- GLASS OPTIONS -->
+        <!-- ================================================= -->
 
-    <!-- ================================================= -->
-    <!-- GLASS OPTIONS -->
-    <!-- ================================================= -->
-
-    <div class="rounded-xl border border-[#2F2F2F] bg-[#111111] p-5">
-
-        <h3 class="text-sm font-semibold text-[#D4AF37] uppercase tracking-wider mb-5">
+        <div class="rounded-xl border border-[#2F2F2F] bg-[#111111] p-5">
+          <h3
+            class="text-sm font-semibold text-[#D4AF37] uppercase tracking-wider mb-5"
+          >
             Glass Bottle Options
-        </h3>
+          </h3>
 
-        <div class="grid md:grid-cols-2 gap-6">
-
+          <div class="grid md:grid-cols-2 gap-6">
             <!-- Status -->
 
             <div>
+              <label class="block text-sm text-gray-400 mb-3">
+                Bottle Status
+              </label>
 
-                <label class="block text-sm text-gray-400 mb-3">
-                    Bottle Status
+              <div class="flex gap-4">
+                <label
+                  class="flex items-center gap-2 bg-[#1A1A1A] border border-[#333333] rounded-lg px-4 py-3 cursor-pointer"
+                >
+                  <input
+                    type="radio"
+                    name="glass_status"
+                    value="Drinking Here"
+                    checked
+                  />
+
+                  <span class="text-white"> Drinking Here </span>
                 </label>
 
-                <div class="flex gap-4">
+                <label
+                  class="flex items-center gap-2 bg-[#1A1A1A] border border-[#333333] rounded-lg px-4 py-3 cursor-pointer"
+                >
+                  <input type="radio" name="glass_status" value="Take Away" />
 
-                    <label class="flex items-center gap-2 bg-[#1A1A1A] border border-[#333333] rounded-lg px-4 py-3 cursor-pointer">
-
-                        <input
-                            type="radio"
-                            name="glass_status"
-                            value="Drinking Here"
-                            checked
-                        >
-
-                        <span class="text-white">
-                            Drinking Here
-                        </span>
-
-                    </label>
-
-                    <label class="flex items-center gap-2 bg-[#1A1A1A] border border-[#333333] rounded-lg px-4 py-3 cursor-pointer">
-
-                        <input
-                            type="radio"
-                            name="glass_status"
-                            value="Take Away"
-                        >
-
-                        <span class="text-white">
-                            Take Away
-                        </span>
-
-                    </label>
-
-                </div>
-
+                  <span class="text-white"> Take Away </span>
+                </label>
+              </div>
             </div>
 
             <!-- Fine -->
 
             <div>
+              <label class="block text-sm text-gray-400 mb-3">
+                Glass Fine (UGX)
+              </label>
 
-                <label class="block text-sm text-gray-400 mb-3">
-                    Glass Fine (UGX)
-                </label>
-
-                <input
-                    id="glass_fine"
-                    type="number"
-                    value="1000"
-                    class="w-full bg-[#1A1A1A] border border-[#333333] rounded-lg px-4 py-3 text-white focus:border-[#D4AF37] focus:outline-none"
-                >
-
+              <input
+                id="glass_fine"
+                type="number"
+                value="1000"
+                class="w-full bg-[#1A1A1A] border border-[#333333] rounded-lg px-4 py-3 text-white focus:border-[#D4AF37] focus:outline-none"
+              />
             </div>
-
+          </div>
         </div>
 
-    </div>
+        <!-- Button -->
 
-    <!-- Button -->
-
-    <button
-        id="addItem"
-        class="mt-8 w-full bg-[#D4AF37] hover:bg-yellow-500 text-black font-semibold py-3 rounded-lg transition"
-    >
-        + Add Item
-    </button>
-
-</section>
+        <button
+          id="addItem"
+          class="mt-8 w-full bg-[#D4AF37] hover:bg-yellow-500 text-black font-semibold py-3 rounded-lg transition"
+        >
+          + Add Item
+        </button>
+      </section>
 
       <!-- ========================================= -->
       <!-- SALES ITEMS -->
       <!-- ========================================= -->
 
-      <section class="bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl p-6 mt-8">
-        <h2 class="text-lg font-semibold text-white mb-6">Sales Items</h2>
+      <section
+        class="bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl p-6 mt-8 shadow-lg"
+      >
+        <!-- Header & Item Counter -->
+        <div
+          class="flex items-center justify-between mb-6 pb-4 border-b border-[#2A2A2A]"
+        >
+          <div class="flex items-center gap-3">
+            <h2 class="text-lg font-semibold text-white">Sales Items</h2>
+            <span
+              class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/20"
+            >
+              5 Items
+            </span>
+          </div>
 
-        <div class="overflow-x-auto">
-          <table class="w-full text-left">
-            <!-- Table Head -->
+          <button
+            type="button"
+            class="text-xs text-gray-400 hover:text-red-400 transition font-medium cursor-pointer"
+          >
+            Clear All
+          </button>
+        </div>
+
+        <!-- 1. DESKTOP VIEW: TABLE (Visible on md screens and up) -->
+        <div class="hidden md:block overflow-x-auto">
+          <table class="w-full text-left border-collapse">
             <thead>
-              <tr class="border-b border-[#2A2A2A] text-gray-400 text-sm">
-                <th class="py-3 px-2">Item Name</th>
-
-                <th class="py-3 px-2">Barcode</th>
-
-                <th class="py-3 px-2">Category</th>
-
-                <th class="py-3 px-2">Unit Type</th>
-
-                <th class="py-3 px-2">Quantity</th>
-
-                <th class="py-3 px-2">Selling Price</th>
-
-                <th class="py-3 px-2">Subtotal</th>
-
-                <th class="py-3 px-2 text-right">Actions</th>
+              <tr
+                class="border-b border-[#2A2A2A] text-gray-400 text-xs font-semibold uppercase tracking-wider"
+              >
+                <th class="py-3 px-3">Product Info</th>
+                <th class="py-3 px-3">Type</th>
+                <th class="py-3 px-3 text-right">Price</th>
+                <th class="py-3 px-3 text-center">Qty</th>
+                <th class="py-3 px-3 text-right">Subtotal</th>
+                <th class="py-3 px-3 text-center">Action</th>
               </tr>
             </thead>
 
-            <!-- Table Body -->
-            <tbody id="salesItemsBody">
-              <tr class="border-b border-[#2A2A2A] hover:bg-[#202020]">
-                <td class="py-4 px-2">Sprite Lemon-Lime 330ml</td>
-
-                <td class="py-4 px-2">457687865454</td>
-
-                <td class="py-4 px-2">Soft Drinks</td>
-
-                <td class="py-4 px-2">Plastic</td>
-
-                <td class="py-4 px-2">2</td>
-
-                <td class="py-4 px-2">UGX 1,000</td>
-
-                <td class="py-4 px-2 font-semibold text-[#D4AF37]">
+            <tbody class="divide-y divide-[#2A2A2A] text-sm">
+              <!-- Item 1 -->
+              <tr class="hover:bg-[#111111]/60 transition-colors group">
+                <td class="py-4 px-3">
+                  <p
+                    class="font-semibold text-white group-hover:text-[#D4AF37] transition"
+                  >
+                    Sprite Lemon-Lime 330ml
+                  </p>
+                  <p class="text-xs text-gray-500 mt-0.5">
+                    Barcode: 457687865454
+                  </p>
+                </td>
+                <td class="py-4 px-3">
+                  <div class="flex items-center gap-1.5">
+                    <span
+                      class="text-xs bg-[#222222] text-gray-300 px-2 py-0.5 rounded border border-[#333333]"
+                      >Soft Drinks</span
+                    >
+                    <span
+                      class="text-xs bg-[#222222] text-gray-400 px-2 py-0.5 rounded border border-[#333333]"
+                      >Plastic</span
+                    >
+                  </div>
+                </td>
+                <td class="py-4 px-3 text-right text-gray-300 font-medium">
+                  UGX 1,000
+                </td>
+                <td class="py-4 px-3 text-center">
+                  <span
+                    class="inline-block bg-[#111111] border border-[#333333] font-semibold text-white px-3 py-1 rounded-lg"
+                    >2</span
+                  >
+                </td>
+                <td class="py-4 px-3 text-right font-bold text-[#D4AF37]">
                   UGX 2,000
                 </td>
-
-                <td class="py-4 px-2 text-right">
+                <td class="py-4 px-3 text-center">
                   <button
                     type="button"
-                    class="text-red-400 hover:text-red-300 font-medium text-sm"
+                    class="p-2 rounded-lg text-red-400/80 hover:text-red-400 hover:bg-red-500/10 transition cursor-pointer"
+                    title="Remove item"
                   >
-                    Remove
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
                   </button>
                 </td>
               </tr>
 
-              <tr class="border-b border-[#2A2A2A] hover:bg-[#202020]">
-                <td class="py-4 px-2">Coca-Cola 500ml</td>
-
-                <td class="py-4 px-2">784512369874</td>
-
-                <td class="py-4 px-2">Soft Drinks</td>
-
-                <td class="py-4 px-2">Plastic</td>
-
-                <td class="py-4 px-2">1</td>
-
-                <td class="py-4 px-2">UGX 2,500</td>
-
-                <td class="py-4 px-2 font-semibold text-[#D4AF37]">
+              <!-- Item 2 -->
+              <tr class="hover:bg-[#111111]/60 transition-colors group">
+                <td class="py-4 px-3">
+                  <p
+                    class="font-semibold text-white group-hover:text-[#D4AF37] transition"
+                  >
+                    Coca-Cola 500ml
+                  </p>
+                  <p class="text-xs text-gray-500 mt-0.5">
+                    Barcode: 784512369874
+                  </p>
+                </td>
+                <td class="py-4 px-3">
+                  <div class="flex items-center gap-1.5">
+                    <span
+                      class="text-xs bg-[#222222] text-gray-300 px-2 py-0.5 rounded border border-[#333333]"
+                      >Soft Drinks</span
+                    >
+                    <span
+                      class="text-xs bg-[#222222] text-gray-400 px-2 py-0.5 rounded border border-[#333333]"
+                      >Plastic</span
+                    >
+                  </div>
+                </td>
+                <td class="py-4 px-3 text-right text-gray-300 font-medium">
                   UGX 2,500
                 </td>
-
-                <td class="py-4 px-2 text-right">
+                <td class="py-4 px-3 text-center">
+                  <span
+                    class="inline-block bg-[#111111] border border-[#333333] font-semibold text-white px-3 py-1 rounded-lg"
+                    >1</span
+                  >
+                </td>
+                <td class="py-4 px-3 text-right font-bold text-[#D4AF37]">
+                  UGX 2,500
+                </td>
+                <td class="py-4 px-3 text-center">
                   <button
                     type="button"
-                    class="text-red-400 hover:text-red-300 font-medium text-sm"
+                    class="p-2 rounded-lg text-red-400/80 hover:text-red-400 hover:bg-red-500/10 transition cursor-pointer"
+                    title="Remove item"
                   >
-                    Remove
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
                   </button>
                 </td>
               </tr>
 
-              <tr class="hover:bg-[#202020]">
-                <td class="py-4 px-2">Nile Special Bottle</td>
+              <!-- Item 3 -->
+              <tr class="hover:bg-[#111111]/60 transition-colors group">
+                <!-- Product Info & Bottle Status -->
+                <td class="py-4 px-3">
+                  <p
+                    class="font-semibold text-white group-hover:text-[#D4AF37] transition"
+                  >
+                    Nile Special Bottle
+                  </p>
+                  <p class="text-xs text-gray-500 mt-0.5">
+                    Barcode: 998745612300
+                  </p>
 
-                <td class="py-4 px-2">998745612300</td>
+                  <!-- Bottle Service / Fine Status Badges -->
+                  <div
+                    class="mt-2 flex flex-wrap items-center gap-1.5 text-[11px]"
+                  >
+                    <!-- Takeaway + Fine Badge -->
+                    <span
+                      class="inline-flex items-center gap-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded-md font-medium"
+                    >
+                      <svg
+                        class="w-3 h-3"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                        />
+                      </svg>
+                      Takeaway (+UGX 500 Bottle Deposit)
+                    </span>
 
-                <td class="py-4 px-2">Beer</td>
-
-                <td class="py-4 px-2">Glass</td>
-
-                <td class="py-4 px-2">3</td>
-
-                <td class="py-4 px-2">UGX 6,000</td>
-
-                <td class="py-4 px-2 font-semibold text-[#D4AF37]">
-                  UGX 18,000
+                    <!-- Alternative Option: Drinking Here (Uncomment when applicable) -->
+                    <!-- 
+                <span class="inline-flex items-center gap-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-md font-medium">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    Drinking Here (No Deposit)
+                </span> 
+                -->
+                  </div>
                 </td>
 
-                <td class="py-4 px-2 text-right">
+                <!-- Category & Packaging -->
+                <td class="py-4 px-3">
+                  <div class="flex items-center gap-1.5">
+                    <span
+                      class="text-xs bg-[#222222] text-amber-300/80 px-2 py-0.5 rounded border border-[#333333]"
+                      >Beer</span
+                    >
+                    <span
+                      class="text-xs bg-[#222222] text-amber-400/90 px-2 py-0.5 rounded border border-amber-500/30"
+                      >Glass Bottle</span
+                    >
+                  </div>
+                </td>
+
+                <!-- Price -->
+                <td class="py-4 px-3 text-right text-gray-300 font-medium">
+                  UGX 6,000
+                </td>
+
+                <!-- Qty -->
+                <td class="py-4 px-3 text-center">
+                  <span
+                    class="inline-block bg-[#111111] border border-[#333333] font-semibold text-white px-3 py-1 rounded-lg"
+                    >3</span
+                  >
+                </td>
+
+                <!-- Subtotal (Includes bottle deposit if applicable) -->
+                <td class="py-4 px-3 text-right font-bold text-[#D4AF37]">
+                  UGX 19,500
+                  <span class="block text-[10px] font-normal text-gray-400"
+                    >(UGX 18,000 + 1,500 fee)</span
+                  >
+                </td>
+
+                <!-- Action -->
+                <td class="py-4 px-3 text-center">
                   <button
                     type="button"
-                    class="text-red-400 hover:text-red-300 font-medium text-sm"
+                    class="p-2 rounded-lg text-red-400/80 hover:text-red-400 hover:bg-red-500/10 transition cursor-pointer"
+                    title="Remove item"
                   >
-                    Remove
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
                   </button>
                 </td>
               </tr>
             </tbody>
           </table>
+        </div>
+
+        <!-- 2. MOBILE VIEW: CARDS (Visible on screens below md) -->
+        <div class="block md:hidden space-y-4">
+          <!-- Mobile Card Item 1 -->
+          <div
+            class="bg-[#111111] border border-[#2A2A2A] rounded-lg p-4 space-y-3"
+          >
+            <div class="flex items-start justify-between">
+              <div>
+                <p class="font-semibold text-white">Sprite Lemon-Lime 330ml</p>
+                <p class="text-xs text-gray-500 mt-0.5">
+                  Barcode: 457687865454
+                </p>
+              </div>
+              <button
+                type="button"
+                class="text-red-400 p-1 hover:bg-red-500/10 rounded transition cursor-pointer"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              <span
+                class="text-xs bg-[#222222] text-gray-300 px-2 py-0.5 rounded border border-[#333333]"
+                >Soft Drinks</span
+              >
+              <span
+                class="text-xs bg-[#222222] text-gray-400 px-2 py-0.5 rounded border border-[#333333]"
+                >Plastic</span
+              >
+            </div>
+
+            <div
+              class="flex items-center justify-between pt-2 border-t border-[#222222]"
+            >
+              <div>
+                <span
+                  class="block text-[10px] text-gray-500 uppercase tracking-wider"
+                  >Qty</span
+                >
+                <span class="text-sm font-semibold text-white">2</span>
+              </div>
+              <div class="text-right">
+                <span
+                  class="block text-[10px] text-gray-500 uppercase tracking-wider"
+                  >Subtotal</span
+                >
+                <span class="text-sm font-bold text-[#D4AF37]">UGX 2,000</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile Card Item 2 -->
+          <div
+            class="bg-[#111111] border border-[#2A2A2A] rounded-lg p-4 space-y-3"
+          >
+            <div class="flex items-start justify-between">
+              <div>
+                <p class="font-semibold text-white">Coca-Cola 500ml</p>
+                <p class="text-xs text-gray-500 mt-0.5">
+                  Barcode: 784512369874
+                </p>
+              </div>
+              <button
+                type="button"
+                class="text-red-400 p-1 hover:bg-red-500/10 rounded transition cursor-pointer"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              <span
+                class="text-xs bg-[#222222] text-gray-300 px-2 py-0.5 rounded border border-[#333333]"
+                >Soft Drinks</span
+              >
+              <span
+                class="text-xs bg-[#222222] text-gray-400 px-2 py-0.5 rounded border border-[#333333]"
+                >Plastic</span
+              >
+            </div>
+
+            <div
+              class="flex items-center justify-between pt-2 border-t border-[#222222]"
+            >
+              <div>
+                <span
+                  class="block text-[10px] text-gray-500 uppercase tracking-wider"
+                  >Qty</span
+                >
+                <span class="text-sm font-semibold text-white">1</span>
+              </div>
+              <div class="text-right">
+                <span
+                  class="block text-[10px] text-gray-500 uppercase tracking-wider"
+                  >Subtotal</span
+                >
+                <span class="text-sm font-bold text-[#D4AF37]">UGX 2,500</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile Card Item 3 -->
+          <!-- Mobile Card Item for Glass Bottle -->
+          <div
+            class="bg-[#111111] border border-[#2A2A2A] rounded-lg p-4 space-y-3"
+          >
+            <div class="flex items-start justify-between">
+              <div>
+                <p class="font-semibold text-white">Nile Special Bottle</p>
+                <p class="text-xs text-gray-500 mt-0.5">
+                  Barcode: 998745612300
+                </p>
+              </div>
+              <button
+                type="button"
+                class="text-red-400 p-1 hover:bg-red-500/10 rounded transition cursor-pointer"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-1.5">
+              <span
+                class="text-xs bg-[#222222] text-amber-300/80 px-2 py-0.5 rounded border border-[#333333]"
+                >Beer</span
+              >
+              <span
+                class="text-xs bg-[#222222] text-amber-400/90 px-2 py-0.5 rounded border border-amber-500/30"
+                >Glass Bottle</span
+              >
+            </div>
+
+            <!-- Status & Fee Notification -->
+            <div class="bg-[#1A1A1A] p-2 rounded-md border border-[#2A2A2A]">
+              <span
+                class="inline-flex items-center gap-1 bg-amber-500/10 text-amber-400 text-xs px-2 py-0.5 rounded font-medium"
+              >
+                <svg
+                  class="w-3.5 h-3.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                  />
+                </svg>
+                Takeaway: UGX 500 Bottle Fee/Qty
+              </span>
+            </div>
+
+            <div
+              class="flex items-center justify-between pt-2 border-t border-[#222222]"
+            >
+              <div>
+                <span
+                  class="block text-[10px] text-gray-500 uppercase tracking-wider"
+                  >Qty</span
+                >
+                <span class="text-sm font-semibold text-white">3</span>
+              </div>
+              <div class="text-right">
+                <span
+                  class="block text-[10px] text-gray-500 uppercase tracking-wider"
+                  >Subtotal</span
+                >
+                <span class="text-sm font-bold text-[#D4AF37]">UGX 19,500</span>
+                <span class="block text-[9px] text-gray-400"
+                  >(Incl. deposit)</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cart Running Footer Subtotal -->
+        <div
+          class="mt-6 pt-4 border-t border-[#2A2A2A] flex flex-wrap items-center justify-between gap-4 text-sm"
+        >
+          <span class="text-gray-400"
+            >Cart Total (13 units across 5 items)</span
+          >
+          <div class="flex items-center gap-2">
+            <span class="text-gray-400 uppercase text-xs tracking-wider"
+              >Subtotal:</span
+            >
+            <span class="text-xl font-bold text-[#D4AF37]">UGX 35,000</span>
+          </div>
         </div>
       </section>
 
