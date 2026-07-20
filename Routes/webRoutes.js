@@ -1,6 +1,7 @@
 const express = require("express");
-const path = require('path')
+const path = require('path');
 
+const { protect } = require("../middleware/authMiddleware");
 const router = express.Router();
 
 // Home page
@@ -14,11 +15,11 @@ router.get("/auth/login", (req, res) => {
 });
 
 // Stock Pages
-router.get("/stock/add", (req, res) => {
+router.get("/stock/add", protect, (req, res) => {
     res.sendFile(path.join(__dirname, '..', "public", "stock", "addStock.html"));
 });
 
-router.get("/stock/view", (req, res) => {
+router.get("/stock/view", protect, (req, res) => {
     res.sendFile(path.join(__dirname, "..", "public", "stock", "viewStock.html"));
 });
 
