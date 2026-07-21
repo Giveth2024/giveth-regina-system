@@ -1,6 +1,7 @@
 import { navbar } from "../components/navbar.js";
 import { footer } from "../components/footer.js";
 import { glassSales } from "../components/glassSales.js";
+import { renderSalesTable } from "./OneTime/renderSalesTable.js";
 import { renderStockTable } from "./OneTime/stockRender.js";
 import { getStock } from "./OneTime/stockApi.js";
 
@@ -185,7 +186,8 @@ function getSalesValues() {
   if (
     full_quantity === "" ||
     full_quantity === null ||
-    full_quantity === undefined
+    full_quantity === undefined ||
+    parseFloat(full_quantity) === 0
   )
     return alert(`Quantity is Invalid`);
   if (
@@ -215,6 +217,7 @@ function getSalesValues() {
         unit_type: unit_type,
         full_quantity: full_quantity,
         selling_price: selling_price,
+        subtotal: full_quantity * selling_price
       };
     }
 
@@ -227,6 +230,7 @@ function getSalesValues() {
       unit_type: unit_type,
       full_quantity: full_quantity,
       selling_price: selling_price,
+      subtotal: full_quantity * selling_price
     };
   }
 
@@ -238,9 +242,75 @@ function getSalesValues() {
     unit_type: unit_type,
     full_quantity: full_quantity,
     selling_price: selling_price,
+    subtotal: full_quantity * selling_price
+  };
+}
+
+// Array to hold sales items
+const sale_items = [];
+
+// Get all the subtotals
+function getTotalAmount(items)
+{
+  let total = 0;
+  let units = 0
+
+  for (const item of items)
+    {
+    console.log(items);
+    total += item.subtotal;
+    units += item.full_quantity;
+    if (item.unit_type === "Glass" && item.glass_status === "Take Away")
+    {
+      total += item.glass_fine_per_unit;
+    }
+
+  }
+  return {
+    totalAmount: total,
+    totalUnits : units
   };
 }
 
 document.getElementById("addSalesItem").addEventListener("click", () => {
-  console.log(getSalesValues());
+  if (!getSalesValues()) return; 
+  sale_items.push(getSalesValues());
+  document.getElementById("items_count").innerHTML = `${sale_items.length} Items`;
+
+  // Render it into the sales item table
+  document.getElementById("totalSalesAmount").innerHTML = getTotalAmount(sale_items).totalAmount;
+  document.getElementById("cartTotal").innerHTML = `Cart Total (${getTotalAmount(sale_items).totalUnits} units across ${sale_items.length} items)`
+  renderSalesTable(sale_items);
+});
+
+const tbody = document.getElementById("salesTableBody");
+
+tbody.addEventListener("click", (event) => {
+
+    const button = event.target.closest(".deleteRowButton");
+
+    if (!button) return;
+
+    const index = sale_items.findIndex(
+        item => item.id === button.id
+    );
+
+    if (index === -1) return;
+
+    sale_items.splice(index, 1);
+
+    // update the item count and other stuff here
+    document.getElementById("items_count").innerHTML = `${sale_items.length} Items`;
+    document.getElementById("totalSalesAmount").innerHTML = getTotalAmount(sale_items).totalAmount;
+    document.getElementById("cartTotal").innerHTML = `Cart Total (${getTotalAmount(sale_items).totalUnits} units across ${sale_items.length} items)`;
+    renderSalesTable(sale_items);    
+
+});
+
+document.getElementById("clearAllSales").addEventListener("click", () => {
+  sale_items.splice(0, sale_items.length);
+      document.getElementById("items_count").innerHTML = `${sale_items.length} Items`;
+    document.getElementById("totalSalesAmount").innerHTML = getTotalAmount(sale_items).totalAmount;
+    document.getElementById("cartTotal").innerHTML = `Cart Total (${getTotalAmount(sale_items).totalUnits} units across ${sale_items.length} items)`;
+    renderSalesTable(sale_items);   
 });
