@@ -154,14 +154,20 @@
         <!-- 1. PRODUCT INFORMATION -->
         <!-- ================================================= -->
         <div class="mb-8">
-          <div class="flex items-center gap-2 mb-4">
+        <div class="flex items-center justify-between mb-4 pb-2 border-b border-[#2A2A2A]">
+        <!-- Left Side: Title -->
+        <div class="flex items-center gap-2">
             <span class="h-2 w-2 rounded-full bg-[#D4AF37]"></span>
-            <h3
-              class="text-xs font-bold text-[#D4AF37] uppercase tracking-wider"
-            >
-              Product Information
+            <h3 class="text-xs font-bold text-[#D4AF37] uppercase tracking-wider">
+            Product Information
             </h3>
-          </div>
+        </div>
+
+        <!-- Right Side: Item ID -->
+        <span class="text-[11px] font-mono text-gray-400 bg-[#111111] border border-[#2F2F2F] px-2.5 py-0.5 rounded-md">
+            ID: <span class="text-gray-200 font-semibold" id="item_id"></span>
+        </span>
+        </div>
 
           <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             <!-- Item Name -->

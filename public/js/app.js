@@ -103,6 +103,7 @@ if (viewStockForm) {
 
 function clearElementValues() {
   // clear all
+  document.getElementById("item_id").innerHTML = "";
   document.getElementById("item_name").value = "";
   document.getElementById("barcode").value = "";
   document.getElementById("category").value = "";
@@ -112,7 +113,7 @@ function clearElementValues() {
   console.log('Elements were cleared!!');
 }
 
-clearElementValues()
+clearElementValues();
 
 async function getSalesStock() {
   const searchValue = document.getElementById("search");
@@ -126,6 +127,7 @@ async function getSalesStock() {
   const stockItem = stock.data.data[0];
 
   // set value as is in the entry part
+  document.getElementById("item_id").innerHTML = stockItem.id;
   document.getElementById("item_name").value = stockItem.item_name;
   document.getElementById("barcode").value = stockItem.barcode;
   document.getElementById("category").value = stockItem.category;
