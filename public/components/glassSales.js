@@ -103,7 +103,7 @@ export function glassSales() {
               </label>
               <div class="relative">
                 <input
-                  id="glass_fine"
+                  id="glass_fine_per_unit"
                   type="number"
                   value="1000"
                   class="w-full bg-[#1A1A1A] border border-[#333333] rounded-xl px-4 py-3 text-sm text-white font-medium focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] focus:outline-none transition"

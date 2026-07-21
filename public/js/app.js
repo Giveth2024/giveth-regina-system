@@ -110,7 +110,7 @@ function clearElementValues() {
   document.getElementById("unit_type").value = "";
   document.getElementById("full_quantity").value = "";
   document.getElementById("selling_price").value = "";
-  console.log('Elements were cleared!!');
+  console.log("Elements were cleared!!");
 }
 
 clearElementValues();
@@ -132,7 +132,7 @@ async function getSalesStock() {
   document.getElementById("barcode").value = stockItem.barcode;
   document.getElementById("category").value = stockItem.category;
   document.getElementById("unit_type").value = stockItem.unit_type;
-  document.getElementById("full_quantity").value = stockItem.full_quantity;
+  document.getElementById("full_quantity").value = 0;
   document.getElementById("selling_price").value = stockItem.selling_price;
 
   if (stockItem.unit_type === "Glass") {
@@ -157,3 +157,90 @@ if (document.getElementById("search")) {
     }
   });
 }
+
+function getSalesValues() {
+  const item_id = document.getElementById("item_id").textContent;
+  const item_name = document.getElementById("item_name").value;
+  const barcode = document.getElementById("barcode").value;
+  const category = document.getElementById("category").value;
+  const unit_type = document.getElementById("unit_type").value;
+  const full_quantity = parseFloat(
+    document.getElementById("full_quantity").value,
+  );
+  const selling_price = parseFloat(
+    document.getElementById("selling_price").value,
+  );
+
+  // Validate data
+  if (item_name === "" || item_name === null || item_name === undefined)
+    return alert(`Item name is Invalid`);
+  if (item_id === "" || item_id === null || item_id === undefined)
+    return alert(`Item id is Invalid`);
+  if (barcode === "" || barcode === null || barcode === undefined)
+    return alert(`Barcode is Invalid`);
+  if (category === "" || category === null || category === undefined)
+    return alert(`Category is Invalid`);
+  if (unit_type === "" || unit_type === null || unit_type === undefined)
+    return alert(`Unit Type is Invalid`);
+  if (
+    full_quantity === "" ||
+    full_quantity === null ||
+    full_quantity === undefined
+  )
+    return alert(`Quantity is Invalid`);
+  if (
+    selling_price === "" ||
+    selling_price === null ||
+    selling_price === undefined
+  )
+    return alert(`Selling Price is Invalid`);
+
+  if (unit_type === "Glass") {
+    const glass_status = document.querySelector(
+      'input[name="glass_status"]:checked',
+    ).value;
+    const glass_fine_per_unit = parseFloat(
+      document.getElementById("glass_fine_per_unit").value,
+    );
+
+    if (glass_status === "Take Away") {
+      alert("Charge a fine");
+      return {
+        id: item_id,
+        item_name: item_name,
+        barcode: barcode,
+        category: category,
+        glass_status: glass_status,
+        glass_fine_per_unit: glass_fine_per_unit,
+        unit_type: unit_type,
+        full_quantity: full_quantity,
+        selling_price: selling_price,
+      };
+    }
+
+    return {
+      id: item_id,
+      item_name: item_name,
+      barcode: barcode,
+      category: category,
+      glass_status: glass_status,
+      unit_type: unit_type,
+      full_quantity: full_quantity,
+      selling_price: selling_price,
+    };
+  }
+
+  return {
+    id: item_id,
+    item_name: item_name,
+    barcode: barcode,
+    category: category,
+    unit_type: unit_type,
+    full_quantity: full_quantity,
+    selling_price: selling_price,
+  };
+}
+
+document.getElementById("addSalesItem").addEventListener("click", () => {
+  console.log(getSalesValues());
+});
