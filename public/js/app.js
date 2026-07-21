@@ -1,5 +1,6 @@
 import { navbar } from "../components/navbar.js";
 import { footer } from "../components/footer.js";
+import { glassSales } from "../components/glassSales.js";
 import { renderStockTable } from "./OneTime/stockRender.js";
 import { getStock } from "./OneTime/stockApi.js";
 
@@ -41,7 +42,6 @@ const stock = await getStock();
 renderStockTable(stock);
 
 let timer; // create a timer (Debouncing)
-
 async function getStockFilters()
 {
     clearTimeout(timer);
@@ -95,9 +95,53 @@ async function getStockFilters()
 }
 
 const viewStockForm = document.getElementById("viewStockForm");
-
 if (viewStockForm)
 {
     viewStockForm.addEventListener("input", getStockFilters);
     viewStockForm.addEventListener("change", getStockFilters);
+}
+
+async function getSalesStock() {
+        const searchValue = document.getElementById("search");
+
+    console.log(searchValue.value);
+    const stock = await getStock({search : searchValue.value});
+
+    if (!stock.success) {
+        return alert(stock.message);
+    }
+    const stockItem = stock.data.data[0];
+
+    // set value as is in the entry part
+    document.getElementById('item_name').value = stockItem.item_name;
+    document.getElementById('barcode').value = stockItem.barcode;
+    document.getElementById('category').value = stockItem.category;
+    document.getElementById('unit_type').value = stockItem.unit_type;
+    document.getElementById('full_quantity').value = stockItem.full_quantity;
+    document.getElementById('selling_price').value = stockItem.selling_price;
+
+    
+    if (stockItem.unit_type === "Glass") 
+        {
+        console.log(stockItem.unit_type);
+        document.getElementById("glassOptions").innerHTML = glassSales();
+        return
+    }
+    document.getElementById("glassOptions").innerHTML = "";
+}
+
+if (document.getElementById("salesSearchButton"))
+{
+    document.getElementById("salesSearchButton").addEventListener("click", getSalesStock);
+}
+
+if (document.getElementById("search"))
+{
+    document.getElementById("search").addEventListener('keydown', (event)=> {
+        if (event.key === "Enter")
+        {
+            event.preventDefault()
+            getSalesStock();
+        }
+    });
 }
