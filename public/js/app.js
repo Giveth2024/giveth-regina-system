@@ -257,7 +257,6 @@ function getTotalAmount(items)
 
   for (const item of items)
     {
-    console.log(items);
     total += item.subtotal;
     units += item.full_quantity;
     if (item.unit_type === "Glass" && item.glass_status === "Take Away")
@@ -279,6 +278,8 @@ document.getElementById("addSalesItem").addEventListener("click", () => {
 
   // Render it into the sales item table
   document.getElementById("totalSalesAmount").innerHTML = getTotalAmount(sale_items).totalAmount;
+  document.getElementById("total_amount").value = getTotalAmount(sale_items).totalAmount;
+  document.getElementById("total_items").value = sale_items.length;
   document.getElementById("cartTotal").innerHTML = `Cart Total (${getTotalAmount(sale_items).totalUnits} units across ${sale_items.length} items)`
   renderSalesTable(sale_items);
 });
@@ -301,7 +302,10 @@ tbody.addEventListener("click", (event) => {
 
     // update the item count and other stuff here
     document.getElementById("items_count").innerHTML = `${sale_items.length} Items`;
+    document.getElementById("total_items").value = sale_items.length;
     document.getElementById("totalSalesAmount").innerHTML = getTotalAmount(sale_items).totalAmount;
+    document.getElementById("total_amount").value = getTotalAmount(sale_items).totalAmount;
+    document.getElementById("change_amount").value =  (parseFloat(document.getElementById("amount_paid").value) - parseFloat(getTotalAmount(sale_items).totalAmount)).toFixed(2);
     document.getElementById("cartTotal").innerHTML = `Cart Total (${getTotalAmount(sale_items).totalUnits} units across ${sale_items.length} items)`;
     renderSalesTable(sale_items);    
 
@@ -309,8 +313,28 @@ tbody.addEventListener("click", (event) => {
 
 document.getElementById("clearAllSales").addEventListener("click", () => {
   sale_items.splice(0, sale_items.length);
-      document.getElementById("items_count").innerHTML = `${sale_items.length} Items`;
+  document.getElementById("items_count").innerHTML = `${sale_items.length} Items`;
     document.getElementById("totalSalesAmount").innerHTML = getTotalAmount(sale_items).totalAmount;
     document.getElementById("cartTotal").innerHTML = `Cart Total (${getTotalAmount(sale_items).totalUnits} units across ${sale_items.length} items)`;
+      document.getElementById("change_amount").value =  (parseFloat(document.getElementById("amount_paid").value) - parseFloat(getTotalAmount(sale_items).totalAmount)).toFixed(2);
     renderSalesTable(sale_items);   
+});
+
+document.getElementById("amount_paid").addEventListener("input", () => {
+  document.getElementById("total_amount").value = getTotalAmount(sale_items).totalAmount;
+  document.getElementById("change_amount").value =  (parseFloat(document.getElementById("amount_paid").value) - parseFloat(getTotalAmount(sale_items).totalAmount)).toFixed(2);
+});
+
+document.getElementById("completeSale").addEventListener("click", () => {
+  const payload = {
+    debtor_id : null,
+    creditor_id : null,
+    total_amount : parseFloat(getTotalAmount(sale_items).totalAmount),
+    amount_paid : parseFloat(document.getElementById("amount_paid").value),
+    change_amount : parseFloat(parseFloat(document.getElementById("amount_paid").value) - parseFloat(getTotalAmount(sale_items).totalAmount)).toFixed(2),
+    payment_type : "Cash",
+    items : sale_items
+  }
+
+  console.log(payload);
 });
