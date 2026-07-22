@@ -352,6 +352,11 @@ document.getElementById("completeSale").addEventListener("click", async () => {
 
   const responseData = await completeSaleRequest("/api/giveth/sales/add", payload);
 
-  console.log(responseData);
+  if(!responseData.success) return alert(responseData.message);
+  alert(responseData.message);
+  document.getElementById("amount_paid").value = 0;
+  document.getElementById("total_amount").value = 0;
+  document.getElementById("change_amount").value =  0;
+  window.location.reload();
 });
 
