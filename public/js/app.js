@@ -4,6 +4,7 @@ import { glassSales } from "../components/glassSales.js";
 import { renderSalesTable } from "./OneTime/renderSalesTable.js";
 import { renderStockTable } from "./OneTime/stockRender.js";
 import { getStock } from "./OneTime/stockApi.js";
+import { completeSaleRequest } from "./OneTime/requests.js";
 
 document.getElementById("navbar").innerHTML = navbar();
 document.getElementById("footer").innerHTML = footer();
@@ -208,7 +209,7 @@ function getSalesValues() {
     if (glass_status === "Take Away") {
       alert("Charge a fine");
       return {
-        id: item_id,
+        stock_id: item_id,
         item_name: item_name,
         barcode: barcode,
         category: category,
@@ -222,11 +223,12 @@ function getSalesValues() {
     }
 
     return {
-      id: item_id,
+      stock_id: item_id,
       item_name: item_name,
       barcode: barcode,
       category: category,
       glass_status: glass_status,
+      glass_fine_per_unit: 0,
       unit_type: unit_type,
       full_quantity: full_quantity,
       selling_price: selling_price,
@@ -235,10 +237,12 @@ function getSalesValues() {
   }
 
   return {
-    id: item_id,
+    stock_id: item_id,
     item_name: item_name,
     barcode: barcode,
     category: category,
+    glass_fine_per_unit: 0,
+    glass_status: null,
     unit_type: unit_type,
     full_quantity: full_quantity,
     selling_price: selling_price,
@@ -325,7 +329,17 @@ document.getElementById("amount_paid").addEventListener("input", () => {
   document.getElementById("change_amount").value =  (parseFloat(document.getElementById("amount_paid").value) - parseFloat(getTotalAmount(sale_items).totalAmount)).toFixed(2);
 });
 
-document.getElementById("completeSale").addEventListener("click", () => {
+document.getElementById("completeSale").addEventListener("click", async () => {
+    const updatedStockArray = sale_items.map(item => {
+    // Destructure 'full_quantity' out, and collect all other keys into 'rest'
+    const { full_quantity, ...rest } = item;
+    
+    return {
+      ...rest,            // Copy all other existing keys
+      quantity: full_quantity  // Add the new key with the old value
+    };
+  });
+
   const payload = {
     debtor_id : null,
     creditor_id : null,
@@ -333,8 +347,11 @@ document.getElementById("completeSale").addEventListener("click", () => {
     amount_paid : parseFloat(document.getElementById("amount_paid").value),
     change_amount : parseFloat(parseFloat(document.getElementById("amount_paid").value) - parseFloat(getTotalAmount(sale_items).totalAmount)).toFixed(2),
     payment_type : "Cash",
-    items : sale_items
+    items : updatedStockArray
   }
 
-  console.log(payload);
+  const responseData = await completeSaleRequest("/api/giveth/sales/add", payload);
+
+  console.log(responseData);
 });
+

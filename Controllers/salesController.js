@@ -1,15 +1,16 @@
 const pool = require("../config/db");
 const { v4: uuidv4 } = require("uuid");
 const asyncHandler = require("../Helpers/asyncHandler");
+
 const {
   successResponses,
   generateInvoiceNumber,
   updateStockItem,
+  getExpectedProfit
 } = require("../Helpers/helpers");
 
 exports.addSales = asyncHandler(async (req, res) => {
   const {
-    user_id,
     debtor_id,
     creditor_id,
     total_amount,
@@ -17,6 +18,8 @@ exports.addSales = asyncHandler(async (req, res) => {
     change_amount,
     items,
   } = req.body || {};
+
+  const user_id = req.user.id;
 
   // Create an id for sales
   const sales_id = uuidv4();
@@ -93,6 +96,9 @@ exports.addSales = asyncHandler(async (req, res) => {
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
 
+        const expectedProfit = await getExpectedProfit(connection, item.stock_id);
+        const profit = expectedProfit * item.quantity;
+
       const valueQuery = [
         saleItemId,
         sales_id,
@@ -102,7 +108,7 @@ exports.addSales = asyncHandler(async (req, res) => {
         item.glass_fine_per_unit,
         glassStatusValue,
         item.subtotal,
-        item.profit,
+        profit,
       ];
 
       await connection.query(saleItemQuery, valueQuery);

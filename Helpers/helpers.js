@@ -166,4 +166,22 @@ async function updateStockItem(stockId, glassStatus=null, quantity, tableRows, c
 
 }
 
-module.exports = { successResponses, errorResponse, validateFields, checksIfNumber, generateInvoiceNumber, updateStockItem };
+async function getExpectedProfit(connection, stockId) {
+    const [rows] = await connection.execute(
+        `
+        SELECT expected_profit
+        FROM stock
+        WHERE id = ?
+        LIMIT 1
+        `,
+        [stockId]
+    );
+
+    if (rows.length === 0) {
+        throw new Error("Stock item not found.");
+    }
+
+    return Number(rows[0].expected_profit);
+}
+
+module.exports = { successResponses, errorResponse, validateFields, checksIfNumber, generateInvoiceNumber, updateStockItem, getExpectedProfit };
