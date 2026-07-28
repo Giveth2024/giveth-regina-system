@@ -1,3 +1,0 @@
-Authentication
-1. Verify Email
-2. Forgot Password

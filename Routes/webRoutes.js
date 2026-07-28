@@ -1,30 +1,10 @@
 const express = require("express");
+const router = express.Router();
 const path = require('path');
 
-const { protect } = require("../middleware/authMiddleware");
-const router = express.Router();
-
-// Home page
-router.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "public", "index.html"));
-});
-
-// Auth pages
-router.get("/auth/login", (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "public", "auth", "login.html"));
-});
-
-// Stock Pages
-router.get("/stock/add", protect, (req, res) => {
-    res.sendFile(path.join(__dirname, '..', "public", "stock", "addStock.html"));
-});
-
-router.get("/stock/view", protect, (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "public", "stock", "viewStock.html"));
-});
-
-router.get("/sales/add", protect, (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "public", "sales", "addSales.html"))
+// Products pages
+router.get("/product/add", (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/admin/addProduct.html"));
 });
 
 module.exports = router;

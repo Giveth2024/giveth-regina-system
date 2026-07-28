@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+
+    <link rel="stylesheet" href="/css/output.css">
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+<div class="min-h-screen flex items-center justify-center p-8">
+
+    <div class="w-full max-w-5xl bg-gray-900 rounded-2xl shadow-2xl border border-gray-800">
+
+        <!-- Header -->
+        <div class="border-b border-gray-800 px-8 py-6">
+            <h1 class="text-3xl font-bold">
+                Add Product
+            </h1>
+
+            <p class="text-gray-400 mt-2">
+                Create a new product and add it to your inventory.
+            </p>
+        </div>
+
+        <!-- Form -->
+        <form id="productForm" class="grid grid-cols-1 md:grid-cols-2 gap-6 p-8">
+
+            <!-- Product Name -->
+            <div>
+                <label for="name" class="block mb-2 text-sm font-medium">
+                    Product Name
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    required
+                    placeholder="Sprite 500ml"
+                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 text-white placeholder-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
+                >
+            </div>
+
+            <!-- Barcode -->
+            <div>
+                <label for="barcode" class="block mb-2 text-sm font-medium">
+                    Barcode
+                </label>
+
+                <input
+                    type="text"
+                    id="barcode"
+                    required
+                    placeholder="0796554950105"
+                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 text-white placeholder-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
+                >
+            </div>
+
+            <!-- Unit -->
+            <div>
+                <label for="unit" class="block mb-2 text-sm font-medium">
+                    Unit
+                </label>
+
+                <select
+                    id="unit"
+                    required
+                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
+                >
+                    <option value="">Select Unit</option>
+                    <option>Plastic</option>
+                    <option>Glass</option>
+                    <option>Can</option>
+                    <option>Carton</option>
+                    <option>Bottle</option>
+                    <option>Packet</option>
+                    <option>Box</option>
+                    <option>Sachet</option>
+                </select>
+            </div>
+
+            <!-- Category -->
+            <div>
+                <label for="category" class="block mb-2 text-sm font-medium">
+                    Category
+                </label>
+
+                <select
+                    id="category"
+                    required
+                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
+                >
+                    <option value="">Select Category</option>
+                    <option>Water</option>
+                    <option>Soft Drinks</option>
+                    <option>Fruit Juices</option>
+                    <option>Energy Drinks</option>
+                    <option>Beer</option>
+                    <option>Wine</option>
+                    <option>Spirits</option>
+                    <option>Whisky</option>
+                    <option>Gin</option>
+                    <option>Waragi</option>
+                    <option>Vodka</option>
+                    <option>Brandy</option>
+                    <option>Snacks</option>
+                    <option>Food</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <!-- Quantity -->
+            <div>
+                <label for="quantity" class="block mb-2 text-sm font-medium">
+                    Quantity
+                </label>
+
+                <input
+                    type="number"
+                    id="quantity"
+                    min="0"
+                    step="0.01"
+                    required
+                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
+                >
+            </div>
+
+            <!-- Units Per Package -->
+            <div>
+                <label for="total_units_per_package" class="block mb-2 text-sm font-medium">
+                    Units Per Package
+                </label>
+
+                <input
+                    type="number"
+                    id="total_units_per_package"
+                    min="1"
+                    required
+                    placeholder="12"
+                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
+                >
+            </div>
+
+            <!-- Cost Price -->
+            <div>
+                <label for="cost_price" class="block mb-2 text-sm font-medium">
+                    Cost Price
+                </label>
+
+                <input
+                    type="number"
+                    id="cost_price"
+                    min="0"
+                    step="0.01"
+                    required
+                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 focus:border-green-500 focus:ring-2 focus:ring-green-500 outline-none"
+                >
+            </div>
+
+            <!-- Selling Price -->
+            <div>
+                <label for="selling_price" class="block mb-2 text-sm font-medium">
+                    Selling Price
+                </label>
+
+                <input
+                    type="number"
+                    id="selling_price"
+                    min="0"
+                    step="0.01"
+                    required
+                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 focus:border-green-500 focus:ring-2 focus:ring-green-500 outline-none"
+                >
+            </div>
+
+            <!-- Profit -->
+            <div>
+                <label for="profit" class="block mb-2 text-sm font-medium">
+                    Profit
+                </label>
+
+                <input
+                    type="number"
+                    id="profit"
+                    readonly
+                    class="w-full rounded-lg bg-gray-700 border border-gray-700 px-4 py-3 text-green-400 font-semibold cursor-not-allowed"
+                >
+            </div>
+
+            <!-- Reorder -->
+            <div>
+                <label for="reorder_level" class="block mb-2 text-sm font-medium">
+                    Reorder Level
+                </label>
+
+                <input
+                    type="number"
+                    id="reorder_level"
+                    min="0"
+                    step="0.01"
+                    required
+                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
+                >
+            </div>
+
+            <!-- Expiry -->
+            <div class="md:col-span-2">
+                <label for="expiry_date" class="block mb-2 text-sm font-medium">
+                    Expiry Date
+                </label>
+
+                <input
+                    type="date"
+                    id="expiry_date"
+                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 focus:border-red-500 focus:ring-2 focus:ring-red-500 outline-none"
+                >
+            </div>
+
+            <!-- Button -->
+            <div class="md:col-span-2 flex justify-end pt-2">
+
+                <button
+                    type="submit"
+                    class="px-8 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 transition font-semibold shadow-lg"
+                >
+                    Add Product
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+const costPrice = document.getElementById("cost_price");
+const sellingPrice = document.getElementById("selling_price");
+const profit = document.getElementById("profit");
+
+function calculateProfit() {
+
+    const cost = Number(costPrice.value) || 0;
+    const selling = Number(sellingPrice.value) || 0;
+
+    profit.value = (selling - cost).toFixed(2);
+
+}
+
+costPrice.addEventListener("input", calculateProfit);
+sellingPrice.addEventListener("input", calculateProfit);
+
+const form = document.getElementById("productForm");
+
+form.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const body = {
+        name: document.getElementById("name").value,
+        unit: document.getElementById("unit").value,
+        category: document.getElementById("category").value,
+        barcode: document.getElementById("barcode").value,
+        quantity: Number(document.getElementById("quantity").value),
+        cost_price: Number(document.getElementById("cost_price").value),
+        selling_price: Number(document.getElementById("selling_price").value),
+        profit: Number(document.getElementById("profit").value),
+        reorder_level: Number(document.getElementById("reorder_level").value),
+        expiry_date: document.getElementById("expiry_date").value || null,
+        total_units_per_package: Number(document.getElementById("total_units_per_package").value)
+    };
+
+    try {
+
+        const response = await fetch("/api/admin/products", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert("Product added successfully.");
+            form.reset();
+            profit.value = "";
+        } else {
+            alert(data.message);
+        }
+
+    } catch (error) {
+
+        console.error(error);
+        alert("Something went wrong.");
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

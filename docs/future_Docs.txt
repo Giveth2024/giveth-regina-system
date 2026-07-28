@@ -1,2 +1,0 @@
-document about all the functions in the Helpers\helpers.js file in the future
-doucment about authMiddleware.js
