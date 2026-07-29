@@ -215,10 +215,29 @@ exports.addPurchase = async (req, res) => {
             });
         }
 
+        const [rows] = await pool.execute(
+            `
+            SELECT balance
+            FROM balance
+            WHERE id = 1
+            `
+        );
+
+        const balance = Number(rows[0].balance);
+
         //=========================================
         // STEP 4: Calculate total purchase amount
         //=========================================
         const total_amount = quantity * cost_price;
+
+        if (total_amount > balance) {
+            return res.status(400).json({
+                success: false,
+                errors: {
+                    message: "Insufficient balance to complete this purchase."
+                }
+            });
+        }   
 
         //=========================================
         // STEP 5: Connect to database
@@ -313,6 +332,16 @@ exports.addPurchase = async (req, res) => {
                 quantity,
                 product_id
             ]
+        );
+
+        // update the balance table
+        await connection.execute(
+            `
+            UPDATE balance
+            SET balance = balance - ?
+            WHERE id = 1
+            `,
+            [total_amount]
         );
 
         //=========================================
