@@ -12,20 +12,20 @@
   <body class="bg-gray-950 text-white">
     <div class="min-h-screen flex items-center justify-center p-8">
       <div
-        class="w-full max-w-3xl bg-gray-900 border border-gray-800 rounded-2xl shadow-xl"
+        class="w-full max-w-4xl bg-gray-900 rounded-2xl border border-gray-800 shadow-xl"
       >
-        <!-- Header -->
         <div class="p-8 border-b border-gray-800">
           <h1 class="text-3xl font-bold">Add Purchase</h1>
-
-          <p class="text-gray-400 mt-2">Record purchased stock</p>
+          <p class="text-gray-400 mt-2">
+            Search for a product or raw material then record a purchase.
+          </p>
         </div>
 
         <form
           id="purchaseForm"
           class="p-8 grid grid-cols-1 md:grid-cols-2 gap-6"
         >
-          <!-- Type -->
+          <!-- Purchase Type -->
           <div>
             <label class="block mb-2 text-sm font-medium">
               Purchase Type
@@ -34,30 +34,62 @@
             <select
               id="type"
               required
-              class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+              class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select Type</option>
-
               <option value="product">Product</option>
-
               <option value="raw_material">Raw Material</option>
             </select>
           </div>
 
+          <!-- Search -->
+          <div class="relative">
+            <label class="block mb-2 text-sm font-medium">
+              Search Product
+            </label>
+
+            <input
+              type="text"
+              id="search"
+              autocomplete="off"
+              placeholder="Search by product name..."
+              class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
+            />
+
+            <div
+              id="results"
+              class="hidden absolute z-20 mt-2 w-full rounded-lg border border-gray-700 bg-gray-800 max-h-60 overflow-y-auto"
+            ></div>
+          </div>
+
           <!-- Product ID -->
+
           <div>
             <label class="block mb-2 text-sm font-medium"> Product ID </label>
 
             <input
-              type="text"
               id="product_id"
-              required
-              placeholder="Product UUID"
-              class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+              readonly
+              class="w-full bg-gray-700 border border-gray-700 rounded-lg px-4 py-3 text-yellow-400 font-mono"
+            />
+          </div>
+
+          <!-- Selected Product -->
+
+          <div>
+            <label class="block mb-2 text-sm font-medium">
+              Selected Product
+            </label>
+
+            <input
+              id="product_name"
+              readonly
+              class="w-full bg-gray-700 border border-gray-700 rounded-lg px-4 py-3"
             />
           </div>
 
           <!-- Quantity -->
+
           <div>
             <label class="block mb-2 text-sm font-medium">
               Quantity Purchased
@@ -68,13 +100,13 @@
               id="quantity"
               min="1"
               step="0.01"
-              placeholder="12"
               required
-              class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+              class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           <!-- Package Cost -->
+
           <div>
             <label class="block mb-2 text-sm font-medium"> Package Cost </label>
 
@@ -83,42 +115,39 @@
               id="package_cost"
               min="0"
               step="0.01"
-              placeholder="10000"
               required
-              class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+              class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
-          <!-- Unit Cost -->
+          <!-- Cost Price -->
+
           <div>
             <label class="block mb-2 text-sm font-medium">
               Cost Price Per Unit
             </label>
 
             <input
-              type="number"
               id="unit_cost"
               readonly
               class="w-full bg-gray-700 border border-gray-700 rounded-lg px-4 py-3 text-yellow-400 font-bold"
             />
           </div>
 
-          <!-- Total Amount -->
+          <!-- Total -->
+
           <div>
             <label class="block mb-2 text-sm font-medium"> Total Amount </label>
 
             <input
-              type="number"
               id="total_amount"
               readonly
               class="w-full bg-gray-700 border border-gray-700 rounded-lg px-4 py-3 text-green-400 font-bold"
             />
           </div>
 
-          <!-- Button -->
           <div class="md:col-span-2 flex justify-end">
             <button
-              type="submit"
               class="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-lg font-semibold transition"
             >
               Save Purchase
@@ -129,61 +158,106 @@
     </div>
 
     <script>
+      const search = document.getElementById("search");
+      const results = document.getElementById("results");
+
+      const productId = document.getElementById("product_id");
+      const productName = document.getElementById("product_name");
+
       const quantity = document.getElementById("quantity");
       const packageCost = document.getElementById("package_cost");
-
       const unitCost = document.getElementById("unit_cost");
       const totalAmount = document.getElementById("total_amount");
 
-      // Calculate cost per unit and total amount
-      function calculatePurchase() {
+      let timer;
+
+      // Search products
+      search.addEventListener("input", () => {
+        clearTimeout(timer);
+
+        const value = search.value.trim();
+
+        if (value.length < 2) {
+          results.innerHTML = "";
+          results.classList.add("hidden");
+
+          return;
+        }
+
+        timer = setTimeout(async () => {
+          const type = document.getElementById("type").value;
+
+          const response = await fetch(
+            `/api/admin/products?type=${type}&search=${encodeURIComponent(value)}`,
+          );
+
+          const data = await response.json();
+
+          results.innerHTML = "";
+
+          if (!response.ok || !data.data.length) {
+            results.classList.add("hidden");
+
+            return;
+          }
+
+          data.data.forEach((item) => {
+            const div = document.createElement("div");
+
+            div.className = "px-4 py-3 hover:bg-gray-700 cursor-pointer";
+
+            div.textContent = item.name;
+
+            div.onclick = () => {
+              productId.value = item.id;
+              productName.value = item.name;
+              search.value = item.name;
+
+              results.classList.add("hidden");
+            };
+
+            results.appendChild(div);
+          });
+
+          results.classList.remove("hidden");
+        }, 300);
+      });
+
+      // Calculate
+
+      function calculate() {
         const qty = Number(quantity.value) || 0;
+        const cost = Number(packageCost.value) || 0;
 
-        const package_price = Number(packageCost.value) || 0;
-
-        if (qty > 0 && package_price > 0) {
-          // Example:
-          // 10000 / 12 = 833.33
-
-          const costPerUnit = package_price / qty;
-
-          unitCost.value = costPerUnit.toFixed(2);
-
-          // Example:
-          // 833.33 * 12 = 9999.96
-
-          totalAmount.value = (costPerUnit * qty).toFixed(2);
+        if (qty > 0 && cost > 0) {
+          unitCost.value = (cost / qty).toFixed(2);
+          totalAmount.value = cost.toFixed(2);
         } else {
           unitCost.value = "";
-
           totalAmount.value = "";
         }
       }
 
-      quantity.addEventListener("input", calculatePurchase);
+      quantity.addEventListener("input", calculate);
+      packageCost.addEventListener("input", calculate);
 
-      packageCost.addEventListener("input", calculatePurchase);
+      document
+        .getElementById("purchaseForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
 
-      const form = document.getElementById("purchaseForm");
+          const body = {
+            type: document.getElementById("type").value,
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+            product_id: productId.value,
 
-        const body = {
-          type: document.getElementById("type").value,
+            quantity: Number(quantity.value),
 
-          product_id: document.getElementById("product_id").value,
+            cost_price: Number(unitCost.value),
 
-          quantity: Number(quantity.value),
+            total_amount: Number(totalAmount.value),
+          };
 
-          cost_price: Number(unitCost.value),
-
-          total_amount: Number(totalAmount.value),
-        };
-
-        console.log(body);
-
-        try {
           const response = await fetch("/api/admin/purchases", {
             method: "POST",
 
@@ -196,24 +270,21 @@
 
           const data = await response.json();
 
-          console.log(data);
-
           if (response.ok) {
-            alert("Purchase added successfully.");
+            alert("Purchase recorded successfully.");
 
-            form.reset();
+            purchaseForm.reset();
 
+            productId.value = "";
+            productName.value = "";
             unitCost.value = "";
             totalAmount.value = "";
+            results.innerHTML = "";
+            results.classList.add("hidden");
           } else {
             alert(data.errors.message);
           }
-        } catch (error) {
-          console.error(error);
-
-          alert("Something went wrong.");
-        }
-      });
+        });
     </script>
   </body>
 </html>
