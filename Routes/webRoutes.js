@@ -12,4 +12,9 @@ router.get("/purchases/add", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/admin/addPurchases.html"));
 });
 
+// Sales Page
+router.get("/sales/add", (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/admin/addSales.html"));
+});
+
 module.exports = router;
