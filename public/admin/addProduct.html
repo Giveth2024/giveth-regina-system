@@ -1,308 +1,338 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Product</title>
 
-    <link rel="stylesheet" href="/css/output.css">
-</head>
-<body class="bg-gray-950 text-gray-100">
-
-<div class="min-h-screen flex items-center justify-center p-8">
-
-    <div class="w-full max-w-5xl bg-gray-900 rounded-2xl shadow-2xl border border-gray-800">
-
+    <link rel="stylesheet" href="/css/output.css" />
+  </head>
+  <body class="bg-gray-950 text-gray-100">
+    <div
+      class="min-h-screen flex items-center justify-center p-6 bg-slate-950 text-slate-100"
+    >
+      <div
+        class="w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-8 sm:p-10 my-8 space-y-6"
+      >
         <!-- Header -->
-        <div class="border-b border-gray-800 px-8 py-6">
-            <h1 class="text-3xl font-bold">
-                Add Product
-            </h1>
-
-            <p class="text-gray-400 mt-2">
-                Create a new product and add it to your inventory.
-            </p>
+        <div class="border-b border-slate-800 pb-6 mb-8">
+          <h1 class="text-2xl font-bold tracking-tight text-slate-100">
+            Add Product
+          </h1>
+          <p class="text-xs text-slate-400 mt-2">
+            Create a new product record and configure its inventory parameters.
+          </p>
         </div>
 
         <!-- Form -->
-        <form id="productForm" class="grid grid-cols-1 md:grid-cols-2 gap-6 p-8">
-
+        <form id="productForm" class="space-y-8">
+          <!-- SECTION 1: General Details -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 my-6">
             <!-- Product Name -->
-            <div>
-                <label for="name" class="block mb-2 text-sm font-medium">
-                    Product Name
-                </label>
-
-                <input
-                    type="text"
-                    id="name"
-                    required
-                    placeholder="Sprite 500ml"
-                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 text-white placeholder-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
-                >
+            <div class="my-2">
+              <label
+                for="name"
+                class="block text-xs font-semibold text-slate-300 mt-1 mb-3"
+              >
+                Product Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                required
+                placeholder="e.g. Sprite 500ml"
+                class="w-full my-1 bg-slate-800 border border-slate-700/60 focus:border-indigo-500 rounded-lg px-4 py-3 text-sm text-slate-100 placeholder-slate-500 outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all"
+              />
             </div>
 
             <!-- Barcode -->
-            <div>
-                <label for="barcode" class="block mb-2 text-sm font-medium">
-                    Barcode
-                </label>
-
-                <input
-                    type="text"
-                    id="barcode"
-                    required
-                    placeholder="0796554950105"
-                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 text-white placeholder-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
-                >
-            </div>
-
-            <!-- Unit -->
-            <div>
-                <label for="unit" class="block mb-2 text-sm font-medium">
-                    Unit
-                </label>
-
-                <select
-                    id="unit"
-                    required
-                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
-                >
-                    <option value="">Select Unit</option>
-                    <option>Plastic</option>
-                    <option>Glass</option>
-                    <option>Can</option>
-                    <option>Carton</option>
-                    <option>Bottle</option>
-                    <option>Packet</option>
-                    <option>Box</option>
-                    <option>Sachet</option>
-                </select>
+            <div class="my-2">
+              <label
+                for="barcode"
+                class="block text-xs font-semibold text-slate-300 mt-1 mb-3"
+              >
+                Barcode / UPC
+              </label>
+              <input
+                type="text"
+                id="barcode"
+                required
+                placeholder="0796554950105"
+                class="w-full my-1 bg-slate-800 border border-slate-700/60 focus:border-indigo-500 rounded-lg px-4 py-3 text-sm font-mono text-slate-100 placeholder-slate-500 outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all"
+              />
             </div>
 
             <!-- Category -->
-            <div>
-                <label for="category" class="block mb-2 text-sm font-medium">
-                    Category
-                </label>
-
-                <select
-                    id="category"
-                    required
-                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
-                >
-                    <option value="">Select Category</option>
-                    <option>Water</option>
-                    <option>Soft Drinks</option>
-                    <option>Fruit Juices</option>
-                    <option>Energy Drinks</option>
-                    <option>Beer</option>
-                    <option>Wine</option>
-                    <option>Spirits</option>
-                    <option>Whisky</option>
-                    <option>Gin</option>
-                    <option>Waragi</option>
-                    <option>Vodka</option>
-                    <option>Brandy</option>
-                    <option>Snacks</option>
-                    <option>Food</option>
-                    <option>Other</option>
-                </select>
+            <div class="my-2">
+              <label
+                for="category"
+                class="block text-xs font-semibold text-slate-300 mt-1 mb-3"
+              >
+                Category
+              </label>
+              <select
+                id="category"
+                required
+                class="w-full my-1 bg-slate-800 border border-slate-700/60 focus:border-indigo-500 rounded-lg px-4 py-3 text-sm text-slate-100 outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all cursor-pointer"
+              >
+                <option value="">Select Category</option>
+                <option>Water</option>
+                <option>Soft Drinks</option>
+                <option>Beer</option>
+                <option>Spirits</option>
+                <option>Snacks</option>
+                <option>Food</option>
+                <option>Other</option>
+              </select>
             </div>
 
-            <!-- Quantity -->
-            <div>
-                <label for="quantity" class="block mb-2 text-sm font-medium">
-                    Quantity
-                </label>
-
-                <input
-                    type="number"
-                    id="quantity"
-                    min="0"
-                    step="0.01"
-                    required
-                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
-                >
+            <!-- Unit Packaging -->
+            <div class="my-2">
+              <label
+                for="unit"
+                class="block text-xs font-semibold text-slate-300 mt-1 mb-3"
+              >
+                Packaging Unit
+              </label>
+              <select
+                id="unit"
+                required
+                class="w-full my-1 bg-slate-800 border border-slate-700/60 focus:border-indigo-500 rounded-lg px-4 py-3 text-sm text-slate-100 outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all cursor-pointer"
+              >
+                <option value="">Select Packaging</option>
+                <option>Plastic</option>
+                <option>Glass</option>
+                <option>Can</option>
+                <option>Carton</option>
+                <option>Bottle</option>
+              </select>
             </div>
+          </div>
 
-            <!-- Units Per Package -->
-            <div>
-                <label for="total_units_per_package" class="block mb-2 text-sm font-medium">
-                    Units Per Package
-                </label>
+          <!-- Financials Divider -->
+          <div class="pt-6 pb-2 border-b border-slate-800 my-8">
+            <span
+              class="text-xs font-bold uppercase tracking-wider text-indigo-400"
+            >
+              Pricing & Margins
+            </span>
+          </div>
 
-                <input
-                    type="number"
-                    id="total_units_per_package"
-                    min="1"
-                    required
-                    placeholder="12"
-                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
-                >
-            </div>
-
+          <!-- SECTION 2: Financials -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6 my-6">
             <!-- Cost Price -->
-            <div>
-                <label for="cost_price" class="block mb-2 text-sm font-medium">
-                    Cost Price
-                </label>
-
-                <input
-                    type="number"
-                    id="cost_price"
-                    min="0"
-                    step="0.01"
-                    required
-                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 focus:border-green-500 focus:ring-2 focus:ring-green-500 outline-none"
-                >
+            <div class="my-2">
+              <label
+                for="cost_price"
+                class="block text-xs font-semibold text-slate-300 mt-1 mb-3"
+              >
+                Cost Price
+              </label>
+              <input
+                type="number"
+                id="cost_price"
+                min="0"
+                step="0.01"
+                required
+                placeholder="0.00"
+                class="w-full my-1 bg-slate-800 border border-slate-700/60 focus:border-indigo-500 rounded-lg px-4 py-3 text-sm text-slate-100 outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all"
+              />
             </div>
 
             <!-- Selling Price -->
-            <div>
-                <label for="selling_price" class="block mb-2 text-sm font-medium">
-                    Selling Price
-                </label>
-
-                <input
-                    type="number"
-                    id="selling_price"
-                    min="0"
-                    step="0.01"
-                    required
-                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 focus:border-green-500 focus:ring-2 focus:ring-green-500 outline-none"
-                >
+            <div class="my-2">
+              <label
+                for="selling_price"
+                class="block text-xs font-semibold text-slate-300 mt-1 mb-3"
+              >
+                Selling Price
+              </label>
+              <input
+                type="number"
+                id="selling_price"
+                min="0"
+                step="0.01"
+                required
+                placeholder="0.00"
+                class="w-full my-1 bg-slate-800 border border-slate-700/60 focus:border-indigo-500 rounded-lg px-4 py-3 text-sm text-slate-100 outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all"
+              />
             </div>
 
-            <!-- Profit -->
-            <div>
-                <label for="profit" class="block mb-2 text-sm font-medium">
-                    Profit
-                </label>
+            <!-- Expected Profit -->
+            <div class="my-2">
+              <label
+                for="profit"
+                class="block text-xs font-semibold text-slate-400 mt-1 mb-3"
+              >
+                Expected Profit
+              </label>
+              <input
+                type="number"
+                id="profit"
+                readonly
+                placeholder="0.00"
+                class="w-full my-1 bg-slate-800/40 border border-slate-800 rounded-lg px-4 py-3 text-sm font-mono font-bold text-emerald-400 outline-none select-all cursor-not-allowed"
+              />
+            </div>
+          </div>
 
-                <input
-                    type="number"
-                    id="profit"
-                    readonly
-                    class="w-full rounded-lg bg-gray-700 border border-gray-700 px-4 py-3 text-green-400 font-semibold cursor-not-allowed"
-                >
+          <!-- Inventory Divider -->
+          <div class="pt-6 pb-2 border-b border-slate-800 my-8">
+            <span
+              class="text-xs font-bold uppercase tracking-wider text-indigo-400"
+            >
+              Inventory Parameters
+            </span>
+          </div>
+
+          <!-- SECTION 3: Inventory -->
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-6 my-6"
+          >
+            <!-- Quantity -->
+            <div class="my-2">
+              <label
+                for="quantity"
+                class="block text-xs font-semibold text-slate-300 mt-1 mb-3"
+              >
+                Initial Stock
+              </label>
+              <input
+                type="number"
+                id="quantity"
+                min="0"
+                step="0.01"
+                required
+                placeholder="0"
+                class="w-full my-1 bg-slate-800 border border-slate-700/60 focus:border-indigo-500 rounded-lg px-4 py-3 text-sm text-slate-100 outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all"
+              />
             </div>
 
-            <!-- Reorder -->
-            <div>
-                <label for="reorder_level" class="block mb-2 text-sm font-medium">
-                    Reorder Level
-                </label>
-
-                <input
-                    type="number"
-                    id="reorder_level"
-                    min="0"
-                    step="0.01"
-                    required
-                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
-                >
+            <!-- Units Per Package -->
+            <div class="my-2">
+              <label
+                for="total_units_per_package"
+                class="block text-xs font-semibold text-slate-300 mt-1 mb-3"
+              >
+                Units / Pkg
+              </label>
+              <input
+                type="number"
+                id="total_units_per_package"
+                min="1"
+                required
+                placeholder="12"
+                class="w-full my-1 bg-slate-800 border border-slate-700/60 focus:border-indigo-500 rounded-lg px-4 py-3 text-sm text-slate-100 outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all"
+              />
             </div>
 
-            <!-- Expiry -->
-            <div class="md:col-span-2">
-                <label for="expiry_date" class="block mb-2 text-sm font-medium">
-                    Expiry Date
-                </label>
-
-                <input
-                    type="date"
-                    id="expiry_date"
-                    class="w-full rounded-lg bg-gray-800 border border-gray-700 px-4 py-3 focus:border-red-500 focus:ring-2 focus:ring-red-500 outline-none"
-                >
+            <!-- Reorder Threshold -->
+            <div class="my-2">
+              <label
+                for="reorder_level"
+                class="block text-xs font-semibold text-slate-300 mt-1 mb-3"
+              >
+                Reorder Alert
+              </label>
+              <input
+                type="number"
+                id="reorder_level"
+                min="0"
+                step="0.01"
+                required
+                placeholder="5"
+                class="w-full my-1 bg-slate-800 border border-slate-700/60 focus:border-indigo-500 rounded-lg px-4 py-3 text-sm text-slate-100 outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all"
+              />
             </div>
 
-            <!-- Button -->
-            <div class="md:col-span-2 flex justify-end pt-2">
-
-                <button
-                    type="submit"
-                    class="px-8 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 transition font-semibold shadow-lg"
-                >
-                    Add Product
-                </button>
-
+            <!-- Expiry Date -->
+            <div class="my-2">
+              <label
+                for="expiry_date"
+                class="block text-xs font-semibold text-slate-300 mt-1 mb-3"
+              >
+                Expiry Date
+              </label>
+              <input
+                type="date"
+                id="expiry_date"
+                class="w-full my-1 bg-slate-800 border border-slate-700/60 focus:border-indigo-500 rounded-lg px-4 py-3 text-sm text-slate-100 outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all cursor-pointer"
+              />
             </div>
+          </div>
 
+          <!-- Submit Action -->
+          <div class="pt-8 mt-10 border-t border-slate-800 flex justify-end">
+            <button
+              type="submit"
+              class="w-full sm:w-auto my-2 bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] text-white px-10 py-3.5 rounded-lg text-sm font-bold tracking-wide transition-all shadow-lg shadow-indigo-600/20"
+            >
+              Save Product
+            </button>
+          </div>
         </form>
-
+      </div>
     </div>
 
-</div>
+    <script>
+      const costPrice = document.getElementById("cost_price");
+      const sellingPrice = document.getElementById("selling_price");
+      const profit = document.getElementById("profit");
 
-<script>
+      function calculateProfit() {
+        const cost = Number(costPrice.value) || 0;
+        const selling = Number(sellingPrice.value) || 0;
 
-const costPrice = document.getElementById("cost_price");
-const sellingPrice = document.getElementById("selling_price");
-const profit = document.getElementById("profit");
+        profit.value = (selling - cost).toFixed(2);
+      }
 
-function calculateProfit() {
+      costPrice.addEventListener("input", calculateProfit);
+      sellingPrice.addEventListener("input", calculateProfit);
 
-    const cost = Number(costPrice.value) || 0;
-    const selling = Number(sellingPrice.value) || 0;
+      const form = document.getElementById("productForm");
 
-    profit.value = (selling - cost).toFixed(2);
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-}
+        const body = {
+          name: document.getElementById("name").value,
+          unit: document.getElementById("unit").value,
+          category: document.getElementById("category").value,
+          barcode: document.getElementById("barcode").value,
+          quantity: Number(document.getElementById("quantity").value),
+          cost_price: Number(document.getElementById("cost_price").value),
+          selling_price: Number(document.getElementById("selling_price").value),
+          profit: Number(document.getElementById("profit").value),
+          reorder_level: Number(document.getElementById("reorder_level").value),
+          expiry_date: document.getElementById("expiry_date").value || null,
+          total_units_per_package: Number(
+            document.getElementById("total_units_per_package").value,
+          ),
+        };
 
-costPrice.addEventListener("input", calculateProfit);
-sellingPrice.addEventListener("input", calculateProfit);
-
-const form = document.getElementById("productForm");
-
-form.addEventListener("submit", async (e) => {
-
-    e.preventDefault();
-
-    const body = {
-        name: document.getElementById("name").value,
-        unit: document.getElementById("unit").value,
-        category: document.getElementById("category").value,
-        barcode: document.getElementById("barcode").value,
-        quantity: Number(document.getElementById("quantity").value),
-        cost_price: Number(document.getElementById("cost_price").value),
-        selling_price: Number(document.getElementById("selling_price").value),
-        profit: Number(document.getElementById("profit").value),
-        reorder_level: Number(document.getElementById("reorder_level").value),
-        expiry_date: document.getElementById("expiry_date").value || null,
-        total_units_per_package: Number(document.getElementById("total_units_per_package").value)
-    };
-
-    try {
-
-        const response = await fetch("/api/admin/products", {
+        try {
+          const response = await fetch("/api/admin/products", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify(body)
-        });
+            body: JSON.stringify(body),
+          });
 
-        const data = await response.json();
+          const data = await response.json();
 
-        if (response.ok) {
+          if (response.ok) {
             alert("Product added successfully.");
             form.reset();
             profit.value = "";
-        } else {
+          } else {
             alert(data.message);
+          }
+        } catch (error) {
+          console.error(error);
+          alert("Something went wrong.");
         }
-
-    } catch (error) {
-
-        console.error(error);
-        alert("Something went wrong.");
-
-    }
-
-});
-
-</script>
-
-</body>
+      });
+    </script>
+  </body>
 </html>
