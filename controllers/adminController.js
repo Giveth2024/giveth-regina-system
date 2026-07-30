@@ -76,10 +76,10 @@ exports.addProduct = async (req, res) => {
 
     await connection.execute(sql, [
       id,
-      name,
+      name.trim(),
       unit,
       category,
-      barcode,
+      barcode.trim(),
       quantity,
       cost_price,
       selling_price,
@@ -96,11 +96,12 @@ exports.addProduct = async (req, res) => {
       `
             INSERT INTO stock (
                 id,
-                product_id
+                product_id,
+                current_quantity
             )
-            VALUES (?, ?)
+            VALUES (?, ?, ?)
             `,
-      [stockId, id],
+      [stockId, id, quantity],
     );
 
     await connection.commit();
