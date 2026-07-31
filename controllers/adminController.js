@@ -417,7 +417,7 @@ exports.createSale = async (req, res) => {
     await connection.beginTransaction();
 
     // Generate invoice number
-    const invoice_number = await generateInvoiceNumber();
+    const invoice_number = generateInvoiceNumber();
 
     const sale_id = uuidv4();
 
