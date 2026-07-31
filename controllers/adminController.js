@@ -417,7 +417,7 @@ exports.createSale = async (req, res) => {
     await connection.beginTransaction();
 
     // Generate invoice number
-    const invoice_number = await generateInvoiceNumber(connection);
+    const invoice_number = await generateInvoiceNumber();
 
     const sale_id = uuidv4();
 
@@ -609,31 +609,19 @@ await connection.execute(
 };
 
 // Invoice Generator
-async function generateInvoiceNumber(connection) {
-  const now = new Date();
+// Invoice Generator
+function generateInvoiceNumber() {
+    const now = new Date();
 
-  const date =
-    now.getFullYear().toString() +
-    String(now.getMonth() + 1).padStart(2, "0") +
-    String(now.getDate()).padStart(2, "0");
+    const date =
+        now.getFullYear().toString() +
+        String(now.getMonth() + 1).padStart(2, "0") +
+        String(now.getDate()).padStart(2, "0");
 
-  const time =
-    String(now.getHours()).padStart(2, "0") +
-    String(now.getMinutes()).padStart(2, "0") +
-    String(now.getSeconds()).padStart(2, "0");
+    const time =
+        String(now.getHours()).padStart(2, "0") +
+        String(now.getMinutes()).padStart(2, "0") +
+        String(now.getSeconds()).padStart(2, "0");
 
-  const prefix = `INV-${date}-${time}`;
-
-  const [rows] = await connection.execute(
-    `
-        SELECT COUNT(*) AS total
-        FROM sales
-        WHERE invoice_number LIKE ?
-        `,
-    [`${prefix}-%`],
-  );
-
-  const sequence = rows[0].total + 1;
-
-  return `${prefix}-${sequence}`;
+    return `INV-${date}-${time}`;
 }
